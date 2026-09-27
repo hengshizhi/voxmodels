@@ -266,8 +266,70 @@ def release_state(tag: str, repo: str):
     return None, 0
 
 
+def _fmt_delta(v: dict) -> str:
+    """一个参照的 Δ 单元格：`+0.0203 [−0.0049, +0.0453] ★`。缺数就印 `—`（不猜）。"""
+    d = v.get("delta")
+    if d is None:
+        return "—"
+    lo, hi = v.get("lo"), v.get("hi")
+    cell = f"{d:+.4f} [" + ("?" if lo is None else f"{lo:+.4f}") + ", " \
+           + ("?" if hi is None else f"{hi:+.4f}") + "]"
+    return cell + (" ★" if v.get("sig") else "")
+
+
+def _bench_md(man: dict) -> list:
+    """把索引里的 `bench` 块渲染成发布页的「跑分」一节（没有块就什么都不渲染）。
+
+    一段话都不重写：指标名/方向/说明全部来自块本身（它又来自榜单的 `COLS`），
+    所以发布页与榜单**不会各说各的**。唯一由这里补的是"怎么读"那几句。
+    """
+    b = man.get("bench") or {}
+    ms = [m for m in (b.get("metrics") or []) if m.get("value") is not None]
+    if not ms:
+        return []
+    refs: list = []
+    for m in ms:
+        for v in m.get("vs") or []:
+            if v.get("name") and v["name"] not in refs:
+                refs.append(v["name"])
+    head = f"{b.get('n_items')} 例、同一份考卷（用例集指纹 `{b.get('fingerprint')}`）" \
+           + (f"，跑于 {b.get('date')}" if b.get("date") else "") + "。"
+    L = ["", "## 跑分", "", head, "",
+         f"| 指标 | `{man.get('name')}` |" + "".join(f" vs `{r}` |" for r in refs),
+         "|---|---|" + "---|" * len(refs)]
+    for m in ms:
+        by = {v.get("name"): v for v in (m.get("vs") or [])}
+        cells = [f"`{m['key']}`（{m.get('direction') or ''}）", f"{m['value']:.3f}"]
+        cells += [_fmt_delta(by[r]) if r in by else "—" for r in refs]
+        L.append("| " + " | ".join(cells) + " |")
+    L += ["", "- Δ 是**配对**均值差（同一批用例逐例配对）+ bootstrap 95% 置信区间；"
+              "★ = 区间不含 0，即**显著**。"]
+    sig = [(m["key"], v["name"], v.get("delta"))
+           for m in ms for v in (m.get("vs") or []) if v.get("sig")]
+    if sig:
+        L.append("- 达到显著的只有：" + "、".join(
+            (f"`{k}` 相对 `{r}`（{d:+.4f}）" if d is not None else f"`{k}` 相对 `{r}`")
+            for k, r, d in sig) + "。")
+    else:
+        L.append("- **没有任何差异达到显著** —— 这些数字在本题量下分不出高下。")
+    L.append("- 其余差异（含所有 0.0x 量级的）都落在噪声里：**别把点估计的差当成提升**。")
+    pairs = {v.get("pairs") for m in ms for v in (m.get("vs") or []) if v.get("pairs")}
+    if pairs and b.get("n_items") not in pairs:
+        L.append(f"- ⚠️ 配对只用了 {sorted(pairs)} 例（本版跑了 {b.get('n_items')} 例）"
+                 " —— 两侧考卷不完全相同，比出来的差要留个心眼。")
+    L += ["", "**指标口径**（与 MeanVC2 的 `finetune/bench_leaderboard.py` 同一套、同为均值口径）", ""]
+    for m in ms:
+        L.append(f"- `{m['key']}`（{m.get('direction') or ''}）：{m.get('desc') or ''}")
+    if b.get("runs"):
+        L += ["", "- 数据来源：`bench/runs/` 下的 "
+                  + "、".join(f"`{r}`" for r in b["runs"]) + "。"]
+    L += ["- ⚠️ 基准分数**不能代替试听** —— 本项目记过一次 mel-L2 与耳朵四次相反的教训"
+          "（MeanVC2 `DEV_STATUS.md` §9.4），验收以试听为主。"]
+    return L
+
+
 def notes_for(category: str, man: dict) -> str:
-    """release 正文（给下载者看的）：这是什么、上一级是谁、装哪儿。"""
+    """release 正文（给下载者看的）：这是什么、上一级是谁、跑分、装哪儿。"""
     L = [f"**{man.get('name')}** — {KIND_CN[category]}", ""]
     if man.get("base"):
         L.append(f"- 上一级权重：`{man['base']}`")
@@ -279,6 +341,7 @@ def notes_for(category: str, man: dict) -> str:
         L.append(f"- 来源语料：{man['source']}")
     if man.get("note"):
         L += ["", man["note"]]
+    L += _bench_md(man)                        # 跑分（只读索引里的 bench 块，没有就跳过）
     L += ["", "## 安装", "", INSTALL_CN[category], "",
           f"zip 内的索引是 `{PACK_INDEX_NAME}`（不是库里的 `<Name>.json`），"
           "解压后**不需要任何改名**即可被应用识别。"]
@@ -417,6 +480,8 @@ def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description="模型库条目打包 / 发布到 GitHub Release")
     ap.add_argument("--list", action="store_true", help="列出条目与发布状态")
+    ap.add_argument("--notes", action="store_true",
+                    help="只把 release 正文打出来（不打包、不上传）—— 发布前审一遍")
     ap.add_argument("--kind", default="", help="base / derivation / timbre")
     ap.add_argument("--name", default="", help="条目名（逗号分隔可多个）")
     ap.add_argument("--all", action="store_true",
@@ -481,6 +546,15 @@ def main() -> int:
             return 2
     if args.limit:
         keys = keys[:args.limit]
+
+    if args.notes:                                 # 注意放在 --name / --limit 之后，否则它们不生效
+        for cat, name in keys:
+            log("=" * 72)
+            log(f"{cat}/{name}   ->  {tag_for(cat, name)}")
+            log("=" * 72)
+            log(notes_for(cat, ents[(cat, name)]))
+            log()
+        return 0
 
     meanvc2 = find_meanvc2(args.meanvc2)
     os.makedirs(DIST_DIR, exist_ok=True)
