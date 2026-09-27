@@ -1,6 +1,10 @@
 # 打包产物（zip 是发布到 GitHub Release 的，不进仓库）
 dist/
 
+# Python 字节码（在本仓根目录跑 release.py 会产生）
+__pycache__/
+*.pyc
+
 # 编辑器 / 系统杂项
 .vscode/
 .idea/

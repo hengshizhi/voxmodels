@@ -92,21 +92,38 @@ voxmodels/
 ## 5. 怎么**发布**一个模型或音色
 
 1. 在 MeanVC2 里把资产做成合规目录（模型见其 README §9.4，音色见 §9.3）。
-2. 同步索引进本仓库：
+2. 同步索引进本仓库（在 **MeanVC2** 目录里跑）：
 
    ```bash
-   cd <MeanVC2>
    python finetune/voxmodels.py            # 只看计划，不写盘
    python finetune/voxmodels.py --write    # 落盘
    ```
 
-3. 把资产目录打成 zip —— **一个 release 只放一个**，zip 内保持 `<Name>/cf.json` 的形态
-   （即把库里的 `<Name>.json` 改名回 `cf.json`）。
-4. 建 release（`gh release create <tag> <Name>.zip`，或网页上传）。
-5. 把 `download` / `release` 两个字段回填进索引。
+3. 在本仓库根目录用 **`release.py`** 打包并发布（它自动打 zip、建 release、回填链接）：
 
-**命名建议**：`<tag>` 用 `<类>-<Name>`（如 `derivation-atlas-v01`、`timbre-冷冷v2`），
-这样直链和发布页一眼能对上是哪个资产。
+   ```bash
+   python release.py --list                                     # 看有哪些、发布没发布
+   python release.py --kind timbre --name 冷冷v2                  # 只打包，不上传
+   python release.py --kind timbre --name 冷冷v2 --publish
+   python release.py --kind timbre --all --match '^AISHELL' --exclude '@pp' --publish
+   ```
+
+   常用开关：`--match` / `--exclude`（正则筛选，**某一批发什么是取舍、不是规矩，所以放命令行**）、
+   `--limit`、`--force`（release 已存在时覆盖上传）、`--src`（本体目录找不到时直接指定）。
+   筛选参数一个都不给时脚本会拒绝执行 —— 免得"默认全发 238 条"。
+
+4. **把回填结果提交推送**：
+
+   ```bash
+   git add -A && git commit -m "chore: 回填发布链接" && git push
+   ```
+
+   > ⚠️ 这一步不能省。`release.py` 只改工作区；**不提交的话，GitHub 上看到的 `download` /
+   > `release` 还是空的**（踩过）。
+
+**约定**：一次发布 = 一个模型或音色，tag 用 `<类>-<Name>`（如 `derivation-atlas-v01`、
+`timbre-冷冷v2`），zip 内保持 `<Name>/cf.json` 的形态 —— 都由 `release.py` 自动做到。
+弱网下失败的条目**重跑一遍**即可：已有 release 会被识别为"已存在"，只补回填、不重传。
 
 ## 6. 维护约定（踩过的坑）
 
@@ -124,12 +141,21 @@ voxmodels/
 
 ## 7. 工具在哪
 
-同步与体检工具在 MeanVC2 主仓：**`finetune/voxmodels.py`**
+| 工具 | 位置 | 干什么 |
+|---|---|---|
+| **`release.py`** | **本仓库根目录** | 打包 zip → 建 GitHub Release → 回填 `download` / `release`。自包含，只读本仓索引。 |
+| `finetune/voxmodels.py` | MeanVC2 主仓 | 索引同步与体检（本机资产 → 库里的 `<Name>.json`）。它要扫 MeanVC2 的资产目录，所以留在那边。 |
 
 ```bash
-python finetune/voxmodels.py --quiet           # 只列需要人看的
+python release.py --list                        # 本仓库：列出条目与发布状态
+python release.py --kind base --name atlas-v01 --publish
+
+cd <MeanVC2>
+python finetune/voxmodels.py --quiet            # 只列需要人看的
 python finetune/voxmodels.py --only timbre      # 只同步音色
 python finetune/voxmodels.py --check            # 体检（命名 / name 一致性 / 链接格式 / 音色 base）
 ```
 
-库根默认取"MeanVC2 仓库的同级 `voxmodels/`"，可用环境变量 `VOXMODELS_DIR` 覆盖。
+`release.py` 需要知道**本体文件**在哪（本仓只存索引）。它按序搜索 MeanVC2 的资产目录；
+可用 `--src <目录>` 直接指定，或设 `MEANVC2_DIR` 环境变量。库根默认取"MeanVC2 仓库的
+同级 `voxmodels/`"，可用 `VOXMODELS_DIR` 覆盖（`voxmodels.py` 一侧）。
