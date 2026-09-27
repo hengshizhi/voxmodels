@@ -48,6 +48,7 @@ INDEX_EXT = ".json"
 PACK_INDEX_NAME = "cf.json"                    # zip 内的索引名（见设计 1）
 LINK_FIELDS = ("download", "release")
 DIST_DIR = os.path.join(LIB_ROOT, "dist")      # zip 落点（已 gitignore）
+probe_cache: dict = {}                         # 直链 -> Content-Length（同一直链只 HEAD 一次）
 
 REPO = os.environ.get("VOXMODELS_REPO") or "hengshizhi/voxmodels"
 
@@ -214,9 +215,15 @@ def pack(category: str, name: str, man: dict, *, meanvc2: str, src: str = "") ->
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for fn in sorted(os.listdir(stage)):    # 顶层带 <Name>/，与 exports/<Name>/ 对齐
             z.write(os.path.join(stage, fn), arcname=f"{name}/{fn}")
+    # 全量 sha256（客户端要拿它校验下载到的 zip；`sha` 只留短摘要给人看）。
+    # 分块读：权重 86 MB，一次性 read() 会白占一份内存。
+    h = hashlib.sha256()
     with open(zip_path, "rb") as f:
-        sha = hashlib.sha256(f.read()).hexdigest()[:16]
-    return {"zip": zip_path, "size": os.path.getsize(zip_path), "sha": sha, "cover": cover}
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    full = h.hexdigest()
+    return {"zip": zip_path, "size": os.path.getsize(zip_path), "sha": full[:16],
+            "sha256": full, "cover": cover}
 
 
 # ------------------------------------------------------------------ 发布
@@ -314,18 +321,95 @@ def publish(category: str, name: str, man: dict, *, repo: str, force: bool) -> t
     return "已发布", ""
 
 
-def backfill(category: str, name: str, repo: str) -> bool:
-    """把两个链接写回库索引（保留其余字段与顺序）。返回是否真的改了文件。"""
+def backfill(category: str, name: str, repo: str, extra: dict | None = None) -> bool:
+    """把两个链接（+ 可选的 `sha256` / `size`）写回库索引，保留其余字段与顺序。
+
+    `extra` 只在**我们真的上传了**这份 zip 时才传 —— 见 `UPLOADED_STATUS`：
+    "已存在"（release 里已有资产、我们没传）时远端那份和我们刚打的不一定同一份，
+    写进去的 sha 就会指向另一个文件，客户端校验必挂。宁可空着（客户端跳过校验）。
+    """
     p = index_path(category, name)
     man = read_json(p, None)
     if man is None:
         return False
     d_url, r_url = url_pair(category, name, repo)
-    if man.get("download") == d_url and man.get("release") == r_url:
+    changed = False
+    if man.get("download") != d_url:
+        man["download"] = d_url
+        changed = True
+    if man.get("release") != r_url:
+        man["release"] = r_url
+        changed = True
+    for k, v in (extra or {}).items():
+        if v and man.get(k) != v:
+            man[k] = v
+            changed = True
+    if not changed:
         return False                       # 已是这个值，不白改文件
-    man["download"], man["release"] = d_url, r_url
     write_json(p, man)
     return True
+
+
+def probe_size(url: str, timeout: int = 20) -> int:
+    """对一个发布直链发 HEAD，取 `Content-Length`（失败返回 0）。
+
+    给**早于本字段**的条目补 `size` 用：客户端进度条要总字节数，而重新下载 17 个资产
+    （1.4 GB）只为算 sha 不值当；大小能白拿就先拿。
+    """
+    import urllib.request
+    req = urllib.request.Request(url, method="HEAD",
+                                 headers={"User-Agent": "voxmodels-release"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return int(r.headers.get("Content-Length") or 0)
+    except Exception as e:                      # noqa: BLE001
+        log(f"  [warn] HEAD 失败 {url[:60]}…：{e}")
+        return 0
+
+
+# 真正**上传过**的状态（只有这些状态下的 sha256 / size 才可信，见 backfill 的注释）
+UPLOADED_STATUS = ("已发布", "草稿已发布", "补传资产", "覆盖")
+
+
+def write_aggregate_index(repo: str, *, probe: bool = False) -> dict:
+    """把 238 个分散索引聚成一个 `index.json`（客户端只请求这一个文件）。
+
+    为什么必须有它：GitHub 的 **API 在本机被 403**（限流/被挡），客户端没法枚举目录；
+    而 raw 单文件实测 1.7 s 能拿到。238 次 raw 请求既慢又容易被限。
+    """
+    import datetime as _dt
+    ents = all_entries()
+    items = []
+    for (cat, name) in sorted(ents, key=lambda k: (CATEGORIES.index(k[0]), k[1])):
+        man = ents[(cat, name)]
+        it = {"category": cat, "name": man.get("name") or name}
+        for k, v in man.items():
+            if k not in it:
+                it[k] = v
+        if probe and not it.get("size") and it.get("download"):
+            if not probe_cache.get(it["download"]):
+                probe_cache[it["download"]] = probe_size(it["download"])
+                if probe_cache[it["download"]]:
+                    log(f"  [probe] {cat}/{name:<32} {probe_cache[it['download']]/1e6:8.2f} MB")
+            if probe_cache.get(it["download"]):
+                it["size"] = probe_cache[it["download"]]
+        items.append(it)
+    out = {
+        "schema": 1,
+        "repo": repo,
+        "generated": _dt.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "count": len(items),
+        "entries": items,
+    }
+    p = os.path.join(LIB_ROOT, "index.json")
+    write_json(p, out)
+    with_sha = sum(1 for i in items if i.get("sha256"))
+    with_url = sum(1 for i in items if i.get("download"))
+    with_size = sum(1 for i in items if i.get("size"))
+    log(f"\n聚合索引已写入 {p}")
+    log(f"  {len(items)} 条：有直链 {with_url} / 有大小 {with_size} / 有 sha256 {with_sha}")
+    log("  ⚠️ 记得提交推送：git add -A && git commit -m 'chore: 更新聚合索引 index.json' && git push")
+    return out
 
 
 # ------------------------------------------------------------------ main
@@ -347,7 +431,15 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0, help="本次最多处理几个（防手滑）")
     ap.add_argument("--meanvc2", default="", help="MeanVC2 主仓路径（找本体用）")
     ap.add_argument("--src", default="", help="直接指定本体所在目录（优先于搜索）")
+    ap.add_argument("--index", action="store_true",
+                    help="生成聚合索引 index.json（238 条合成一个文件，客户端只请求它）")
+    ap.add_argument("--probe", action="store_true",
+                    help="配合 --index：对缺 size 的条目发 HEAD 补大小（早于该字段的老条目）")
     args = ap.parse_args()
+
+    if args.index:
+        write_aggregate_index(args.repo, probe=args.probe)
+        return 0
 
     ents = all_entries()
     if args.kind:
@@ -410,7 +502,10 @@ def main() -> int:
             ok += 1
             continue
         status, detail = publish(cat, name, ents[(cat, name)], repo=args.repo, force=args.force)
-        wrote = backfill(cat, name, args.repo) if status in GOOD_STATUS else False
+        # sha256 / size 只在**真的上传了**这份 zip 时回填（见 backfill 的注释）
+        extra = ({"sha256": info["sha256"], "size": info["size"]}
+                 if status in UPLOADED_STATUS else None)
+        wrote = backfill(cat, name, args.repo, extra) if status in GOOD_STATUS else False
         log(f"{line}  [{status}]{'  链接已回填' if wrote else ''}")
         if detail:
             log(f"      {detail}")

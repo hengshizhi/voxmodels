@@ -1,0 +1,3710 @@
+{
+  "schema": 1,
+  "repo": "hengshizhi/voxmodels",
+  "generated": "2026-09-27T20:02:34",
+  "count": 238,
+  "entries": [
+    {
+      "category": "base",
+      "name": "atlas-v01",
+      "kind": "base_model",
+      "weights": "atlas-v01.safetensors",
+      "aliases": [
+        "atlas_v01_ema",
+        "atlas_v01"
+      ],
+      "base": "voxmage-ft-1.1",
+      "arch": "atlas-bypass-pitch",
+      "trainer": "atlas_bypass",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 45942,
+      "created": "2026-09-27",
+      "note": "Atlas-v0.1 首炉（atlas_v01，2 epoch / 45,942 batch / 2.6 h）。注意：清单里 GTSinger 只按 1 倍加权（应为 3 倍，权重键名写错所致），故本炉歌唱占比 11.3% 而非预期的 27.6%。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v01/atlas-v01.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v01",
+      "size": 86454920
+    },
+    {
+      "category": "base",
+      "name": "meanvc2-120ms-1.0",
+      "kind": "base_model",
+      "weights": "meanvc2-120ms-1.0.safetensors",
+      "arch": "atlas-frc-120ms",
+      "base": "",
+      "note": "官方基座（上游 ASLP-lab/MeanVC2 的 HuggingFace 仓库）。本索引由 finetune/voxmodels.py 合成 —— 该权重是裸文件、本身没有 cf.json；架构卡 finetune/architectures/atlas-frc-120ms/cf.json 的 ckpt 就是它。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-meanvc2-120ms-1.0/meanvc2-120ms-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-meanvc2-120ms-1.0"
+    },
+    {
+      "category": "base",
+      "name": "meanvc2-40ms-1.0",
+      "kind": "base_model",
+      "weights": "meanvc2-40ms-1.0.safetensors",
+      "arch": "atlas-frc-40ms",
+      "base": "",
+      "note": "官方基座（上游 ASLP-lab/MeanVC2 的 HuggingFace 仓库）。本索引由 finetune/voxmodels.py 合成 —— 该权重是裸文件、本身没有 cf.json；架构卡 finetune/architectures/atlas-frc-40ms/cf.json 的 ckpt 就是它。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-meanvc2-40ms-1.0/meanvc2-40ms-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-meanvc2-40ms-1.0"
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-ft-1.0",
+      "kind": "base_model",
+      "weights": "voxmage-ft-1.0.safetensors",
+      "aliases": [
+        "joint_0926_095326_ema",
+        "joint_0926_095326"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "trainer": "ft_anneal",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 12834,
+      "created": "2026-09-26",
+      "note": "continual 退火微调; init=voxmage-ft120ms-2.0(EMA); 数据 finetune/lists/all_70spk.list (ESD x2 / GTS x1 / VCC x1 / AISHELL-3 70位 x1); batch 4 x 960 accum 2; 6 epoch / 12831 步; lr 2E-05 cosine -> 4E-07",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/derivation-voxmage-ft-1.0/voxmage-ft-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/derivation-voxmage-ft-1.0"
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-ft-1.1",
+      "kind": "base_model",
+      "weights": "voxmage-ft-1.1.safetensors",
+      "aliases": [
+        "ft_smooth_v11_ema",
+        "ft_smooth_v11"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "ft_anneal",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 2139,
+      "created": "2026-09-26",
+      "note": "光滑损失后训练(波形域音高抖动罚); base=voxmage-ft-1.0; 数据 finetune/lists/all_70spk.list; 1 epoch / 2139 步; lr 1E-05 cosine -> 2E-07; lambda_smooth=0.05 every=4 batch=1 win=80ms tau=0.15 cap=1.5",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-ft-1.2",
+      "kind": "base_model",
+      "weights": "voxmage-ft-1.2.safetensors",
+      "aliases": [
+        "ft_smooth_v12_ema",
+        "ft_smooth_v12"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "ft_anneal",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 4278,
+      "created": "2026-09-26",
+      "note": "光滑损失后训练(波形域音高抖动罚); base=voxmage-ft-1.0; 数据 finetune/lists/all_70spk.list; 2 epoch / 4278 步; lr 1E-05 cosine -> 2E-07; lambda_smooth=0.2 every=1 batch=2 win=80ms tau=0.15 cap=1.5",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-ft120ms-1.0",
+      "kind": "base_model",
+      "weights": "voxmage-ft120ms-1.0.safetensors",
+      "aliases": [
+        "ft_120ms_v1_ema"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "trainer": "ft_const_lr",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "created": "2026-09-25",
+      "note": "3 epoch / 11,310 步，恒定 LR 对照组（v1）",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-ft120ms-2.0",
+      "kind": "base_model",
+      "weights": "voxmage-ft120ms-2.0.safetensors",
+      "aliases": [
+        "ft_120ms_v2_ema"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "trainer": "ft_anneal",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "created": "2026-09-25",
+      "note": "6 epoch / 22,620 步，cosine 退火（v2，当前推荐）",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-pushpull-1",
+      "kind": "base_model",
+      "weights": "voxmage-pushpull-1.safetensors",
+      "aliases": [
+        "_ema"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "pushpull",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 4278,
+      "created": "2026-09-26",
+      "note": "pushpull 抽卡; base=voxmage-ft-1.0; 1 epoch; lr=?; lambda_pull=?; lambda_push=?; margin=?; every=?",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-pushpull-2",
+      "kind": "base_model",
+      "weights": "voxmage-pushpull-2.safetensors",
+      "aliases": [
+        "_ema"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "pushpull",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 4278,
+      "created": "2026-09-26",
+      "note": "pushpull 抽卡; base=voxmage-ft-1.0; 1 epoch; lr=?; lambda_pull=?; lambda_push=?; margin=?; every=?",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-pushpull-3",
+      "kind": "base_model",
+      "weights": "voxmage-pushpull-3.safetensors",
+      "aliases": [
+        "_ema"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "pushpull",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 4278,
+      "created": "2026-09-26",
+      "note": "pushpull 抽卡; base=voxmage-ft-1.0; 1 epoch; lr=?; lambda_pull=?; lambda_push=?; margin=?; every=?",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "derivation",
+      "name": "voxmage-pushpull-4",
+      "kind": "base_model",
+      "weights": "voxmage-pushpull-4.safetensors",
+      "aliases": [
+        "_ema"
+      ],
+      "base": "voxmage-ft-1.0",
+      "trainer": "pushpull",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 4278,
+      "created": "2026-09-26",
+      "note": "pushpull 抽卡; base=voxmage-ft-1.0; 1 epoch; lr=?; lambda_pull=?; lambda_push=?; margin=?; every=?",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "AISHELL-3",
+      "gender": "女",
+      "anchor_gain": "+15.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "f0_hz": 247,
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005/AISHELL-SSB0005.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@ft-1.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@ft-1.0/AISHELL-SSB0005@ft-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@ft-1.0"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@ft-1.1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@ft-1.1/AISHELL-SSB0005@ft-1.1.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@ft-1.1"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@ft120ms-2.0/AISHELL-SSB0005@ft120ms-2.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@ft120ms-2.0"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@pp1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@pp2",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@pp3",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0005@pp4",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "AISHELL-3",
+      "gender": "女",
+      "anchor_gain": "+14.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "f0_hz": 224,
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011/AISHELL-SSB0011.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@atlas-v01",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@atlas-v01.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v01"
+      ],
+      "base": "voxmage-ft-1.1",
+      "note": "在 atlas-v01 上重建的锚点（trainer:anchor_opt --arch atlas-bypass-pitch，凸包+500 步）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011@atlas-v01/AISHELL-SSB0011@atlas-v01.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011@atlas-v01"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@ft-1.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011@ft-1.0/AISHELL-SSB0011@ft-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011@ft-1.0",
+      "size": 6846
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@ft-1.1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011@ft-1.1/AISHELL-SSB0011@ft-1.1.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011@ft-1.1"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011@ft120ms-2.0/AISHELL-SSB0011@ft120ms-2.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011@ft120ms-2.0"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@pp1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@pp2",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@pp3",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0011@pp4",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "AISHELL-3",
+      "gender": "女",
+      "anchor_gain": "+14.0%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "f0_hz": 205,
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016/AISHELL-SSB0016.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@ft-1.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@ft-1.0/AISHELL-SSB0016@ft-1.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@ft-1.0"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@ft-1.1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@ft-1.1/AISHELL-SSB0016@ft-1.1.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@ft-1.1"
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@ft120ms-2.0/AISHELL-SSB0016@ft120ms-2.0.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@ft120ms-2.0",
+      "size": 7531
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@pp1",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@pp2",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@pp3",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@pp4",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "女",
+      "anchor_gain": "+0.9%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@pp1",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@pp2",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@pp3",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Soprano-1@pp4",
+      "kind": "timbre",
+      "vector": "DE-Soprano-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "男",
+      "anchor_gain": "+0.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@pp1",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@pp2",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@pp3",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "DE-Tenor-1@pp4",
+      "kind": "timbre",
+      "vector": "DE-Tenor-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1",
+      "kind": "timbre",
+      "vector": "EN-Alto-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "女",
+      "anchor_gain": "+5.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@pp1",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@pp2",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@pp3",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@pp4",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2",
+      "kind": "timbre",
+      "vector": "EN-Alto-2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "女",
+      "anchor_gain": "+0.2%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@ft-1.0",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@ft-1.1",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@pp1",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@pp2",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@pp3",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-2@pp4",
+      "kind": "timbre",
+      "vector": "EN-Alto-2@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1",
+      "kind": "timbre",
+      "vector": "ES-Bass-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "男",
+      "anchor_gain": "+7.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@pp1",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@pp2",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@pp3",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Bass-1@pp4",
+      "kind": "timbre",
+      "vector": "ES-Bass-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "女",
+      "anchor_gain": "+4.0%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@pp1",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@pp2",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@pp3",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ES-Soprano-1@pp4",
+      "kind": "timbre",
+      "vector": "ES-Soprano-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002",
+      "kind": "timbre",
+      "vector": "ESD-F0002.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+7.1%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0002@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0002@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0002@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0002@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0002@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0002@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0002@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0002@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007",
+      "kind": "timbre",
+      "vector": "ESD-F0007.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+11.4%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0007@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0007@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0007@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0007@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0007@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0007@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0007@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0007@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015",
+      "kind": "timbre",
+      "vector": "ESD-F0015.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+12.1%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0015@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0015@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0015@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0015@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0015@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0015@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0015@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0015@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016",
+      "kind": "timbre",
+      "vector": "ESD-F0016.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+15.6%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0016@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0016@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0016@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0016@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0016@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0016@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0016@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0016@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017",
+      "kind": "timbre",
+      "vector": "ESD-F0017.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+15.5%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0017@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0017@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0017@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0017@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0017@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0017@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0017@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0017@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018",
+      "kind": "timbre",
+      "vector": "ESD-F0018.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+23.8%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0018@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0018@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0018@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0018@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0018@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0018@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0018@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0018@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019",
+      "kind": "timbre",
+      "vector": "ESD-F0019.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "女",
+      "anchor_gain": "+8.0%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-F0019@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-F0019@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-F0019@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@pp1",
+      "kind": "timbre",
+      "vector": "ESD-F0019@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@pp2",
+      "kind": "timbre",
+      "vector": "ESD-F0019@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@pp3",
+      "kind": "timbre",
+      "vector": "ESD-F0019@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-F0019@pp4",
+      "kind": "timbre",
+      "vector": "ESD-F0019@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004",
+      "kind": "timbre",
+      "vector": "ESD-M0004.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+16.1%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0004@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0004@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0004@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0004@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0004@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0004@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0004@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0004@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005",
+      "kind": "timbre",
+      "vector": "ESD-M0005.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+11.0%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0005@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0005@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0005@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0005@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0005@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0005@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0005@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0005@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006",
+      "kind": "timbre",
+      "vector": "ESD-M0006.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+5.2%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0006@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0006@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0006@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0006@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0006@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0006@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0006@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0006@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008",
+      "kind": "timbre",
+      "vector": "ESD-M0008.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+5.1%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0008@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0008@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0008@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0008@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0008@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0008@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0008@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0008@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010",
+      "kind": "timbre",
+      "vector": "ESD-M0010.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+11.5%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0010@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0010@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0010@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0010@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0010@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0010@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0010@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0010@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011",
+      "kind": "timbre",
+      "vector": "ESD-M0011.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+23.8%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0011@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0011@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0011@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0011@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0011@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0011@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0011@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0011@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012",
+      "kind": "timbre",
+      "vector": "ESD-M0012.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+13.4%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0012@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0012@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0012@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0012@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0012@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0012@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0012@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0012@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013",
+      "kind": "timbre",
+      "vector": "ESD-M0013.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+11.8%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0013@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0013@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0013@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0013@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0013@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0013@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0013@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0013@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014",
+      "kind": "timbre",
+      "vector": "ESD-M0014.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+22.8%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0014@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0014@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0014@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0014@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0014@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0014@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0014@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0014@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020",
+      "kind": "timbre",
+      "vector": "ESD-M0020.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "ESD",
+      "gender": "男",
+      "anchor_gain": "+10.2%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@ft-1.0",
+      "kind": "timbre",
+      "vector": "ESD-M0020@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@ft-1.1",
+      "kind": "timbre",
+      "vector": "ESD-M0020@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ESD-M0020@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@pp1",
+      "kind": "timbre",
+      "vector": "ESD-M0020@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@pp2",
+      "kind": "timbre",
+      "vector": "ESD-M0020@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@pp3",
+      "kind": "timbre",
+      "vector": "ESD-M0020@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ESD-M0020@pp4",
+      "kind": "timbre",
+      "vector": "ESD-M0020@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "女",
+      "anchor_gain": "+3.9%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "f0_hz": 273,
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@pp1",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@pp2",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@pp3",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@pp4",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "GTSinger",
+      "gender": "男",
+      "anchor_gain": "+0.1%",
+      "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+      "f0_hz": 154,
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@ft-1.0",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@ft-1.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.0"
+      ],
+      "base": "voxmage-ft120ms-2.0",
+      "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@ft-1.1",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@ft-1.1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft-1.1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-ft-1.1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@ft120ms-2.0",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@ft120ms-2.0.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "note": "在 voxmage-ft120ms-2.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@pp1",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@pp1.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-1"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-1 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@pp2",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@pp2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-2"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-2 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@pp3",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@pp3.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-3"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-3 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Tenor-1@pp4",
+      "kind": "timbre",
+      "vector": "ZH-Tenor-1@pp4.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-pushpull-4"
+      ],
+      "base": "voxmage-ft-1.0",
+      "note": "在 voxmage-pushpull-4 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+      "download": "",
+      "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "冷冷v2",
+      "kind": "timbre",
+      "vector": "冷冷v2.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "voxmage-ft120ms-2.0"
+      ],
+      "base": "meanvc2-120ms-1.0",
+      "source": "用户新建",
+      "note": "https://www.bilibili.com/video/BV1SCA7zoEYV/",
+      "timbre_trainer": "anchor_opt",
+      "created": "2026-09-25 20:26",
+      "created_by": "GUI 新建音色",
+      "trained": "2026-09-25 21:04",
+      "download": "",
+      "release": ""
+    }
+  ]
+}
