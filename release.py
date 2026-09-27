@@ -243,27 +243,81 @@ def gh(*args: str, retries: int = 4) -> subprocess.CompletedProcess:
     return last
 
 
-def release_state(tag: str, repo: str):
-    """`(状态, 资产数)`；状态 ∈ `True`(已发布) / `"draft"` / `False`(没有) / `None`(问不出来)。
+def releases_for(tag: str, repo: str):
+    """该 tag 下的**全部** release（`[{id, draft, assets}, …]`）。查不到 / 查询失败返回 `None`。
 
-    **草稿必须单独算一类**：它是上次被打断（取消 / 断网）留下的 —— 对外不可见、直链 **404**。
-    把草稿当"已存在"就会回填一个死链（实测踩过：`derivation-voxmage-ft-1.1` 草稿 assets 为空、
-    直链 404，而正常发布的同族返回 200）。
+    为什么不用 `gh release view <tag>`：**同一个 tag 下可以有多个 release**（实测
+    `base-atlas-v03` 一度挂着 1 个已发布 + 2 个残留草稿），此时 `view` 返回哪个是未定义的。
+    万一它返回草稿，我们就会去"补资产转正"，然后**回填一个指向草稿的死链**。
+    所以这里自己列全并显式分类。
 
-    也必须把 `False` 与 `None` 分开：把网络错误当"不存在"会让脚本去 `create`，
-    撞名时白跑一趟，还把"网络不通"误报成"创建失败"。问不出来就什么都不做，让人重跑。
+    用 `--jq` 逐条输出 JSONL：`gh api --paginate` 在多页时是把多个 JSON 数组**首尾相接**打印的，
+    直接 `json.loads` 会炸；按行解析就没有这个问题。
     """
-    r = gh("release", "view", tag, "--repo", repo, "--json", "isDraft,assets")
-    if r.returncode == 0:
+    r = gh("api", "--paginate", f"repos/{repo}/releases?per_page=100",
+           "--jq", '.[] | {id, draft, tag: .tag_name, assets: (.assets | length)}')
+    if r.returncode != 0:
+        return None
+    out = []
+    for line in (r.stdout or "").splitlines():
+        line = line.strip()
+        if not line:
+            continue
         try:
-            d = json.loads(r.stdout)
+            d = json.loads(line)
         except Exception:                       # noqa: BLE001
-            return True, -1
-        return ("draft" if d.get("isDraft") else True), len(d.get("assets") or [])
-    blob = ((r.stderr or "") + (r.stdout or "")).lower()
-    if "not found" in blob or "no releases" in blob:
-        return False, 0
-    return None, 0
+            continue
+        if d.get("tag") == tag:
+            out.append(d)
+    return out
+
+
+def release_state(tag: str, repo: str):
+    """`(状态, 资产数, 残留草稿的 id 列表)`。
+
+    状态 ∈ `True`(已发布) / `"draft"`(只有草稿) / `False`(没有) / `None`(**问不出来**)。
+
+    * **草稿单独算一类**：它是上次被打断留下的 —— 对外不可见、直链 **404**。把草稿当"已存在"
+      就会回填死链（实测踩过：`derivation-voxmage-ft-1.1` 草稿 assets 为空、直链 404）。
+    * **`False` 与 `None` 必须分开**：把网络错误当"不存在"就会去 `create`，撞名时白跑一趟，
+      还把"网络不通"误报成"创建失败"。问不出来就什么都不做，让人重跑。
+    * **残留草稿**：`gh release create` 内部是"先建草稿 → 传资产 → 转正"，中途断网就会留下
+      0 资产的草稿（实测 `base-atlas-v03` 留了 2 个）。它们**不影响下载**（直链指向已发布那个），
+      但会让人在 release 列表里看到"两个同名、其中一个是空的"。这里把它们的 id 报出来，
+      由 `--cleanup-drafts` 决定删不删 —— 删除是不可逆的，不默认做。
+    """
+    rels = releases_for(tag, repo)
+    if rels is None:
+        return None, 0, []
+    if not rels:
+        return False, 0, []
+    pub = [x for x in rels if not x.get("draft")]
+    drafts = [x for x in rels if x.get("draft")]
+    if pub:
+        # 已发布则以它为准；此时**所有**草稿都是残骸（发布过就不该再有草稿了）。
+        return True, max(int(x.get("assets") or 0) for x in pub), [x["id"] for x in drafts]
+    if len(drafts) == 1:
+        return "draft", int(drafts[0].get("assets") or 0), []
+    # 多个草稿：留**最完整的那个**（资产多的优先、其次 id 新的），其余算残骸。
+    keep = max(drafts, key=lambda x: (int(x.get("assets") or 0), x["id"]))
+    return ("draft", int(keep.get("assets") or 0),
+            [x["id"] for x in drafts if x["id"] != keep["id"]])
+
+
+def drop_releases(ids: list, repo: str) -> tuple:
+    """按 **id** 删 release（`gh release delete` 只吃 tag，而 tag 在这是重复的）。
+
+    按 id 删还有个好处：草稿本来就没有 tag ref，所以**不会**顺手删掉 tag。
+    返回 `(删掉几个, 报错信息)`。
+    """
+    done, errs = 0, []
+    for rid in ids:
+        r = gh("api", "-X", "DELETE", f"repos/{repo}/releases/{rid}")
+        if r.returncode == 0:
+            done += 1
+        else:
+            errs.append(f"{rid}: " + (r.stderr or "").strip()[:80])
+    return done, "；".join(errs)
 
 
 def _fmt_delta(v: dict) -> str:
@@ -348,40 +402,60 @@ def notes_for(category: str, man: dict) -> str:
     return "\n".join(L)
 
 
-def publish(category: str, name: str, man: dict, *, repo: str, force: bool) -> tuple:
+def publish(category: str, name: str, man: dict, *, repo: str, force: bool,
+            cleanup: bool = False) -> tuple:
     """上传并回填链接。返回 `(状态, 说明)`。"""
     tag = tag_for(category, name)
-    st = release_state(tag, repo)
+    st, nassets, strays = release_state(tag, repo)
     if st is None:
         return "网络未通", f"查不到 {tag} 的状态 ⇒ 没上传也没回填（重跑即可）"
+
+    note = ""
+    if strays:
+        if cleanup:
+            done, err = drop_releases(strays, repo)
+            if done != len(strays):
+                return "清理失败", f"残留草稿只删掉 {done}/{len(strays)} 个（{err}）⇒ 重跑"
+            note = f"已清理 {done} 个残留草稿"
+        else:
+            note = (f"⚠️ 该 tag 下另有 {len(strays)} 个残留草稿（断网留下的 0 资产草稿）"
+                    "—— 加 `--cleanup-drafts` 可删")
+            # 有多个同名 release 时，`gh release upload/edit <tag>` 指向哪个**是未定义的**。
+            # 会真的改动远端的分支一律拒绝执行 —— 改错目标的代价比"什么都不做"大得多。
+            if st == "draft" or nassets == 0 or force:
+                return "需先清理草稿", note + "；本次未改动远端"
+
+    def d(detail: str = "") -> str:
+        return (detail + "；" + note) if (detail and note) else (detail or note)
 
     if st == "draft":
         # 补资产 + 取消草稿。顺序不能反：先转正再补资产的话，中间那段时间直链是 404 的。
         up = gh("release", "upload", tag, "--repo", repo, "--clobber",
                 os.path.join(DIST_DIR, name + ".zip"))
         if up.returncode != 0:
-            return "草稿修复失败", (up.stderr or "").strip()[:150]
+            return "草稿修复失败", d((up.stderr or "").strip()[:150])
         ed = gh("release", "edit", tag, "--repo", repo, "--draft=false")
         if ed.returncode != 0:
-            return "草稿修复失败", "资产已补传，但草稿没转正：" + (ed.stderr or "").strip()[:120]
-        return "草稿已发布", f"{tag}（上次被打断留下的草稿，已补资产并转正）"
+            return "草稿修复失败", d("资产已补传，但草稿没转正：" + (ed.stderr or "").strip()[:120])
+        return "草稿已发布", d(f"{tag}（上次被打断留下的草稿，已补资产并转正）")
 
     if st is True:
         if nassets == 0:
             # 已发布但**没有资产** —— 直链同样是死的。补传，不重复建 release。
             up = gh("release", "upload", tag, "--repo", repo, "--clobber",
                     os.path.join(DIST_DIR, name + ".zip"))
-            return ("补传资产" if up.returncode == 0 else "补传失败"), (up.stderr or "").strip()[:150]
+            return ("补传资产" if up.returncode == 0 else "补传失败"), \
+                d((up.stderr or "").strip()[:150])
         if not force:
-            return "已存在", ""            # 已有且完好 ⇒ 当作已发布，照样回填（设计 5）
+            return "已存在", d()            # 已有且完好 ⇒ 当作已发布，照样回填（设计 5）
         up = gh("release", "upload", tag, "--repo", repo, "--clobber",
                 os.path.join(DIST_DIR, name + ".zip"))
-        return ("覆盖" if up.returncode == 0 else "覆盖失败"), (up.stderr or "").strip()[:120]
+        return ("覆盖" if up.returncode == 0 else "覆盖失败"), d((up.stderr or "").strip()[:120])
     r = gh("release", "create", tag, "--repo", repo, "--title", name,
            "--notes", notes_for(category, man), os.path.join(DIST_DIR, name + ".zip"))
     if r.returncode != 0:
-        return "失败", (r.stderr or r.stdout or "").strip()[:200]
-    return "已发布", ""
+        return "失败", d((r.stderr or r.stdout or "").strip()[:200])
+    return "已发布", d()
 
 
 def backfill(category: str, name: str, repo: str, extra: dict | None = None) -> bool:
@@ -488,6 +562,8 @@ def main() -> int:
                     help="确认处理当前筛选出的**全部**条目（不带它就必须给 --name/--match）")
     ap.add_argument("--publish", action="store_true", help="真正上传到 GitHub（默认只打包）")
     ap.add_argument("--force", action="store_true", help="release 已存在时覆盖上传")
+    ap.add_argument("--cleanup-drafts", action="store_true",
+                    help="删掉同名 tag 下的**残留草稿**（断网留下的 0 资产草稿；删除不可逆）")
     ap.add_argument("--repo", default=REPO, help=f"owner/repo（默认 {REPO}）")
     # 筛选**故意做成命令行参数**而不是写死的规则：某一批想发什么是一时的取舍
     # （如"这轮只发 AISHELL 的、且不发 @pp 的"），写进代码会变成一条假规矩。
@@ -575,7 +651,8 @@ def main() -> int:
             log(line)
             ok += 1
             continue
-        status, detail = publish(cat, name, ents[(cat, name)], repo=args.repo, force=args.force)
+        status, detail = publish(cat, name, ents[(cat, name)], repo=args.repo,
+                                 force=args.force, cleanup=args.cleanup_drafts)
         # sha256 / size 只在**真的上传了**这份 zip 时回填（见 backfill 的注释）
         extra = ({"sha256": info["sha256"], "size": info["size"]}
                  if status in UPLOADED_STATUS else None)
