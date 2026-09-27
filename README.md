@@ -1,4 +1,4 @@
-# voxmodels — MeanVC2 模型库（索引仓）
+# voxmodels 模型库（索引仓）
 
 本仓库**只存索引**。模型本体（`.safetensors` 权重 / `.npy` 音色向量）**不进这个仓库**，
 而是通过 **GitHub Release** 的 zip 分发 —— **一次发布 = 一个模型或一个音色**。
