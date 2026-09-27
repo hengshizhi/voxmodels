@@ -13,6 +13,6 @@
   "anchor_gain": "+15.6%",
   "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
   "f0_hz": 247,
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005/AISHELL-SSB0005.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005"
 }

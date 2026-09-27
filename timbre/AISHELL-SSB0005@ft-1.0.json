@@ -9,6 +9,6 @@
   ],
   "base": "voxmage-ft120ms-2.0",
   "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@ft-1.0/AISHELL-SSB0005@ft-1.0.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@ft-1.0"
 }

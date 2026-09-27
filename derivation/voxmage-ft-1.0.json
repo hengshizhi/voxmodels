@@ -14,6 +14,6 @@
   "step": 12834,
   "created": "2026-09-26",
   "note": "continual 退火微调; init=voxmage-ft120ms-2.0(EMA); 数据 finetune/lists/all_70spk.list (ESD x2 / GTS x1 / VCC x1 / AISHELL-3 70位 x1); batch 4 x 960 accum 2; 6 epoch / 12831 步; lr 2E-05 cosine -> 4E-07",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/derivation-voxmage-ft-1.0/voxmage-ft-1.0.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/derivation-voxmage-ft-1.0"
 }

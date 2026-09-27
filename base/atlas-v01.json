@@ -15,6 +15,6 @@
   "step": 45942,
   "created": "2026-09-27",
   "note": "Atlas-v0.1 首炉（atlas_v01，2 epoch / 45,942 batch / 2.6 h）。注意：清单里 GTSinger 只按 1 倍加权（应为 3 倍，权重键名写错所致），故本炉歌唱占比 11.3% 而非预期的 27.6%。",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v01/atlas-v01.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v01"
 }
