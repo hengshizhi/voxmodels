@@ -15,5 +15,96 @@
   "created": "2026-09-26",
   "note": "光滑损失后训练(波形域音高抖动罚); base=voxmage-ft-1.0; 数据 finetune/lists/all_70spk.list; 1 epoch / 2139 步; lr 1E-05 cosine -> 2E-07; lambda_smooth=0.05 every=4 batch=1 win=80ms tau=0.15 cap=1.5",
   "download": "",
-  "release": ""
+  "release": "",
+  "bench": {
+    "date": "2026-09-27",
+    "n_items": 56,
+    "fingerprint": "9e0bffd73d5c",
+    "runs": [
+      "20260927_full"
+    ],
+    "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
+    "metrics": [
+      {
+        "key": "sv_gain",
+        "label": "sv_gain",
+        "direction": "越大越好",
+        "desc": "像目标 − 像源；转换的区分度",
+        "value": 0.194,
+        "vs": []
+      },
+      {
+        "key": "sv_ref",
+        "label": "sv_ref",
+        "direction": "越大越好",
+        "desc": "与目标人**真实录音**的相似度（外部参照）",
+        "value": 0.423,
+        "vs": []
+      },
+      {
+        "key": "sv_src",
+        "label": "sv_src",
+        "direction": "越小越好",
+        "desc": "与源说话人的相似度 ⇒ 身份泄漏",
+        "value": 0.229,
+        "vs": []
+      },
+      {
+        "key": "f0_corr",
+        "label": "f0_corr",
+        "direction": "越大越好",
+        "desc": "与源的 F0 轨迹相关 ⇒ 韵律跟随。⚠️ **分辨力差**：原始 Hz 上逐帧相关，逐句 SD 达 0.21 （按功效分析要检出 0.005 的差需 n≈13,000）—— 判音高请优先看下面几个",
+        "value": 0.684,
+        "vs": []
+      },
+      {
+        "key": "f0_shift",
+        "label": "f0_shift",
+        "direction": "接近 0",
+        "desc": "中位音高差（半音，带符号）⇒ 整体音高被搬走多少",
+        "value": 1.341,
+        "vs": []
+      },
+      {
+        "key": "f0_dev",
+        "label": "f0_dev",
+        "direction": "越小越好",
+        "desc": "去掉整体搬移后的中位绝对偏差（半音）⇒ 音高轨迹跟得准不准",
+        "value": 1.486,
+        "vs": []
+      },
+      {
+        "key": "f0_deriv_x",
+        "label": "f0_deriv_x",
+        "direction": "接近 1",
+        "desc": "平均绝对导数比（生成/源，半音/秒）⇒ 音高平滑度",
+        "value": 1.473,
+        "vs": []
+      },
+      {
+        "key": "f0_jitter_x",
+        "label": "f0_jitter_x",
+        "direction": "接近 1",
+        "desc": "抖动比（生成/源）⇒ 细微抖动",
+        "value": 1.556,
+        "vs": []
+      },
+      {
+        "key": "f0_jump",
+        "label": "f0_jump",
+        "direction": "越小越好",
+        "desc": "生成轨 |d|>30 半音/秒 的帧占比（%）⇒ 局部跳变",
+        "value": 6.68,
+        "vs": []
+      },
+      {
+        "key": "dur_ratio",
+        "label": "dur_ratio",
+        "direction": "接近 1",
+        "desc": "生成/源 时长比 ⇒ 掉字、拖长",
+        "value": 0.963,
+        "vs": []
+      }
+    ]
+  }
 }

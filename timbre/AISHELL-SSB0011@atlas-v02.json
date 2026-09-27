@@ -1,0 +1,14 @@
+{
+  "name": "AISHELL-SSB0011@atlas-v02",
+  "kind": "timbre",
+  "vector": "AISHELL-SSB0011@atlas-v02.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "atlas-v02"
+  ],
+  "base": "voxmage-ft-1.1",
+  "note": "在 atlas-v02 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。锚点只对它自己那份权重最优，换权重需重跑。",
+  "download": "",
+  "release": ""
+}
