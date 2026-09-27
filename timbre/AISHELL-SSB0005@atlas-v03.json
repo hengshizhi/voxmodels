@@ -9,6 +9,8 @@
   ],
   "base": "atlas-v02",
   "note": "在 atlas-v03 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。atlas-v03 = 从 atlas-v02 接着训 + 全量微调。锚点只对它自己那份权重最优，换权重需重跑。",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@atlas-v03/AISHELL-SSB0005@atlas-v03.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@atlas-v03",
+  "sha256": "0163d576821624b3d49c5afd78388bf1af9d886e9a5cf6d64b8f1310899f64ba",
+  "size": 6825
 }
