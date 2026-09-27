@@ -1,0 +1,19 @@
+{
+  "name": "voxmage-ft-1.1",
+  "kind": "base_model",
+  "weights": "voxmage-ft-1.1.safetensors",
+  "aliases": [
+    "ft_smooth_v11_ema",
+    "ft_smooth_v11"
+  ],
+  "base": "voxmage-ft-1.0",
+  "trainer": "ft_anneal",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 2139,
+  "created": "2026-09-26",
+  "note": "光滑损失后训练(波形域音高抖动罚); base=voxmage-ft-1.0; 数据 finetune/lists/all_70spk.list; 1 epoch / 2139 步; lr 1E-05 cosine -> 2E-07; lambda_smooth=0.05 every=4 batch=1 win=80ms tau=0.15 cap=1.5",
+  "download": "",
+  "release": ""
+}

@@ -1,0 +1,17 @@
+{
+  "name": "voxmage-ft120ms-1.0",
+  "kind": "base_model",
+  "weights": "voxmage-ft120ms-1.0.safetensors",
+  "aliases": [
+    "ft_120ms_v1_ema"
+  ],
+  "base": "meanvc2-120ms-1.0",
+  "trainer": "ft_const_lr",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "created": "2026-09-25",
+  "note": "3 epoch / 11,310 步，恒定 LR 对照组（v1）",
+  "download": "",
+  "release": ""
+}

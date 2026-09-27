@@ -1,0 +1,19 @@
+{
+  "name": "冷冷v2",
+  "kind": "timbre",
+  "vector": "冷冷v2.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "voxmage-ft120ms-2.0"
+  ],
+  "base": "meanvc2-120ms-1.0",
+  "source": "用户新建",
+  "note": "https://www.bilibili.com/video/BV1SCA7zoEYV/",
+  "timbre_trainer": "anchor_opt",
+  "created": "2026-09-25 20:26",
+  "created_by": "GUI 新建音色",
+  "trained": "2026-09-25 21:04",
+  "download": "",
+  "release": ""
+}

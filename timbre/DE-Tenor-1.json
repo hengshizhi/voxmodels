@@ -1,0 +1,17 @@
+{
+  "name": "DE-Tenor-1",
+  "kind": "timbre",
+  "vector": "DE-Tenor-1.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "voxmage-ft120ms-2.0"
+  ],
+  "base": "meanvc2-120ms-1.0",
+  "source": "GTSinger",
+  "gender": "男",
+  "anchor_gain": "+0.6%",
+  "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+  "download": "",
+  "release": ""
+}

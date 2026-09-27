@@ -1,0 +1,17 @@
+{
+  "name": "voxmage-ft120ms-2.0",
+  "kind": "base_model",
+  "weights": "voxmage-ft120ms-2.0.safetensors",
+  "aliases": [
+    "ft_120ms_v2_ema"
+  ],
+  "base": "meanvc2-120ms-1.0",
+  "trainer": "ft_anneal",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "created": "2026-09-25",
+  "note": "6 epoch / 22,620 步，cosine 退火（v2，当前推荐）",
+  "download": "",
+  "release": ""
+}

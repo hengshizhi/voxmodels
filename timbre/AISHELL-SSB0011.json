@@ -1,0 +1,18 @@
+{
+  "name": "AISHELL-SSB0011",
+  "kind": "timbre",
+  "vector": "AISHELL-SSB0011.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "voxmage-ft120ms-2.0"
+  ],
+  "base": "meanvc2-120ms-1.0",
+  "source": "AISHELL-3",
+  "gender": "女",
+  "anchor_gain": "+14.6%",
+  "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
+  "f0_hz": 224,
+  "download": "",
+  "release": ""
+}

@@ -1,0 +1,18 @@
+{
+  "name": "voxmage-pushpull-1",
+  "kind": "base_model",
+  "weights": "voxmage-pushpull-1.safetensors",
+  "aliases": [
+    "_ema"
+  ],
+  "base": "voxmage-ft-1.0",
+  "trainer": "pushpull",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 4278,
+  "created": "2026-09-26",
+  "note": "pushpull 抽卡; base=voxmage-ft-1.0; 1 epoch; lr=?; lambda_pull=?; lambda_push=?; margin=?; every=?",
+  "download": "",
+  "release": ""
+}

@@ -1,0 +1,10 @@
+{
+  "name": "meanvc2-120ms-1.0",
+  "kind": "base_model",
+  "weights": "meanvc2-120ms-1.0.safetensors",
+  "arch": "atlas-frc-120ms",
+  "base": "",
+  "note": "官方基座（上游 ASLP-lab/MeanVC2 的 HuggingFace 仓库）。本索引由 finetune/voxmodels.py 合成 —— 该权重是裸文件、本身没有 cf.json；架构卡 finetune/architectures/atlas-frc-120ms/cf.json 的 ckpt 就是它。",
+  "download": "",
+  "release": ""
+}

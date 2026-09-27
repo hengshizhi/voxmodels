@@ -1,0 +1,14 @@
+{
+  "name": "ESD-M0004@ft-1.0",
+  "kind": "timbre",
+  "vector": "ESD-M0004@ft-1.0.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "voxmage-ft-1.0"
+  ],
+  "base": "voxmage-ft120ms-2.0",
+  "note": "在 voxmage-ft-1.0 上重建的锚点（finetune/rebuild_anchors.py）；锚点只对它自己那份权重最优，换权重需重跑",
+  "download": "",
+  "release": ""
+}
