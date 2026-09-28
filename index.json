@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "repo": "hengshizhi/voxmodels",
-  "generated": "2026-09-28T00:46:48",
-  "count": 246,
+  "generated": "2026-09-28T13:46:52",
+  "count": 252,
   "entries": [
     {
       "category": "base",
@@ -34,6 +34,25 @@
         "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
         "metrics": [
           {
+            "key": "__score__",
+            "label": "综合分",
+            "direction": "越大越好",
+            "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+            "value": 54.311,
+            "vs": [
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 54.045,
+                "pairs": 56,
+                "delta": 0.2661,
+                "lo": -1.6341,
+                "hi": 2.2447,
+                "p": 0.419,
+                "sig": false
+              }
+            ]
+          },
+          {
             "key": "sv_gain",
             "label": "sv_gain",
             "direction": "越大越好",
@@ -45,7 +64,7 @@
                 "value": 0.194,
                 "pairs": 56,
                 "delta": 0.0095,
-                "lo": -0.0079,
+                "lo": -0.0069,
                 "hi": 0.0265,
                 "p": 0.689,
                 "sig": false
@@ -64,8 +83,8 @@
                 "value": 0.423,
                 "pairs": 56,
                 "delta": 0.0092,
-                "lo": -0.0042,
-                "hi": 0.0217,
+                "lo": -0.0043,
+                "hi": 0.0222,
                 "p": 0.35,
                 "sig": false
               }
@@ -83,8 +102,8 @@
                 "value": 0.229,
                 "pairs": 56,
                 "delta": -0.0003,
-                "lo": -0.0135,
-                "hi": 0.0123,
+                "lo": -0.0123,
+                "hi": 0.0116,
                 "p": 1.0,
                 "sig": false
               }
@@ -102,8 +121,8 @@
                 "value": 0.684,
                 "pairs": 56,
                 "delta": 0.0201,
-                "lo": -0.0238,
-                "hi": 0.0625,
+                "lo": -0.0225,
+                "hi": 0.0638,
                 "p": 0.058,
                 "sig": false
               }
@@ -121,8 +140,8 @@
                 "value": 1.341,
                 "pairs": 56,
                 "delta": -0.2655,
-                "lo": -0.5768,
-                "hi": 0.0014,
+                "lo": -0.5687,
+                "hi": 0.012,
                 "p": 0.058,
                 "sig": false
               }
@@ -140,8 +159,8 @@
                 "value": 1.486,
                 "pairs": 56,
                 "delta": -0.0282,
-                "lo": -0.2009,
-                "hi": 0.1691,
+                "lo": -0.2054,
+                "hi": 0.1704,
                 "p": 1.0,
                 "sig": false
               }
@@ -159,8 +178,8 @@
                 "value": 1.473,
                 "pairs": 56,
                 "delta": 0.1224,
-                "lo": 0.0436,
-                "hi": 0.2072,
+                "lo": 0.0487,
+                "hi": 0.2112,
                 "p": 0.081,
                 "sig": true
               }
@@ -178,8 +197,8 @@
                 "value": 1.556,
                 "pairs": 56,
                 "delta": 0.1913,
-                "lo": 0.0869,
-                "hi": 0.312,
+                "lo": 0.0809,
+                "hi": 0.3106,
                 "p": 0.022,
                 "sig": true
               }
@@ -197,8 +216,8 @@
                 "value": 6.68,
                 "pairs": 56,
                 "delta": -0.0982,
-                "lo": -0.6197,
-                "hi": 0.4643,
+                "lo": -0.6431,
+                "hi": 0.4464,
                 "p": 0.89,
                 "sig": false
               }
@@ -257,6 +276,25 @@
         "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
         "metrics": [
           {
+            "key": "__score__",
+            "label": "综合分",
+            "direction": "越大越好",
+            "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+            "value": 54.725,
+            "vs": [
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 54.045,
+                "pairs": 56,
+                "delta": 0.6804,
+                "lo": -0.8324,
+                "hi": 2.1608,
+                "p": 0.134,
+                "sig": false
+              }
+            ]
+          },
+          {
             "key": "sv_gain",
             "label": "sv_gain",
             "direction": "越大越好",
@@ -268,8 +306,8 @@
                 "value": 0.194,
                 "pairs": 56,
                 "delta": 0.0148,
-                "lo": -0.004,
-                "hi": 0.0324,
+                "lo": -0.0031,
+                "hi": 0.0335,
                 "p": 0.35,
                 "sig": false
               }
@@ -287,8 +325,8 @@
                 "value": 0.423,
                 "pairs": 56,
                 "delta": 0.0103,
-                "lo": -0.0039,
-                "hi": 0.0244,
+                "lo": -0.0053,
+                "hi": 0.0245,
                 "p": 0.229,
                 "sig": false
               }
@@ -306,8 +344,8 @@
                 "value": 0.229,
                 "pairs": 56,
                 "delta": -0.0045,
-                "lo": -0.0186,
-                "hi": 0.0087,
+                "lo": -0.0177,
+                "hi": 0.0084,
                 "p": 0.894,
                 "sig": false
               }
@@ -325,8 +363,8 @@
                 "value": 0.684,
                 "pairs": 56,
                 "delta": 0.0164,
-                "lo": -0.0358,
-                "hi": 0.0673,
+                "lo": -0.0359,
+                "hi": 0.0686,
                 "p": 0.177,
                 "sig": false
               }
@@ -344,8 +382,8 @@
                 "value": 1.341,
                 "pairs": 56,
                 "delta": -0.3173,
-                "lo": -0.5326,
-                "hi": -0.0905,
+                "lo": -0.5451,
+                "hi": -0.0869,
                 "p": 0.001,
                 "sig": true
               }
@@ -363,8 +401,8 @@
                 "value": 1.486,
                 "pairs": 56,
                 "delta": -0.038,
-                "lo": -0.1871,
-                "hi": 0.1287,
+                "lo": -0.1933,
+                "hi": 0.1331,
                 "p": 0.169,
                 "sig": false
               }
@@ -382,8 +420,8 @@
                 "value": 1.473,
                 "pairs": 56,
                 "delta": 0.1288,
-                "lo": 0.0498,
-                "hi": 0.2173,
+                "lo": 0.05,
+                "hi": 0.2217,
                 "p": 0.014,
                 "sig": true
               }
@@ -401,8 +439,8 @@
                 "value": 1.556,
                 "pairs": 56,
                 "delta": 0.1989,
-                "lo": 0.0774,
-                "hi": 0.3402,
+                "lo": 0.0722,
+                "hi": 0.3439,
                 "p": 0.01,
                 "sig": true
               }
@@ -420,8 +458,8 @@
                 "value": 6.68,
                 "pairs": 56,
                 "delta": -0.1661,
-                "lo": -0.6966,
-                "hi": 0.3786,
+                "lo": -0.7322,
+                "hi": 0.45,
                 "p": 0.497,
                 "sig": false
               }
@@ -481,6 +519,35 @@
         "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
         "metrics": [
           {
+            "key": "__score__",
+            "label": "综合分",
+            "direction": "越大越好",
+            "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+            "value": 55.913,
+            "vs": [
+              {
+                "name": "atlas-v02",
+                "value": 54.725,
+                "pairs": 56,
+                "delta": 1.1875,
+                "lo": -0.759,
+                "hi": 3.0896,
+                "p": 0.788,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 54.045,
+                "pairs": 56,
+                "delta": 1.8679,
+                "lo": -0.3626,
+                "hi": 3.9197,
+                "p": 0.504,
+                "sig": false
+              }
+            ]
+          },
+          {
             "key": "sv_gain",
             "label": "sv_gain",
             "direction": "越大越好",
@@ -492,8 +559,8 @@
                 "value": 0.209,
                 "pairs": 56,
                 "delta": 0.0056,
-                "lo": -0.0127,
-                "hi": 0.0241,
+                "lo": -0.0135,
+                "hi": 0.0249,
                 "p": 0.894,
                 "sig": false
               },
@@ -502,8 +569,8 @@
                 "value": 0.194,
                 "pairs": 56,
                 "delta": 0.0203,
-                "lo": -0.0049,
-                "hi": 0.0453,
+                "lo": -0.0041,
+                "hi": 0.0448,
                 "p": 0.081,
                 "sig": false
               }
@@ -521,8 +588,8 @@
                 "value": 0.434,
                 "pairs": 56,
                 "delta": 0.0036,
-                "lo": -0.0086,
-                "hi": 0.0173,
+                "lo": -0.0089,
+                "hi": 0.018,
                 "p": 0.504,
                 "sig": false
               },
@@ -531,8 +598,8 @@
                 "value": 0.423,
                 "pairs": 56,
                 "delta": 0.0139,
-                "lo": -0.0044,
-                "hi": 0.0337,
+                "lo": -0.0063,
+                "hi": 0.0333,
                 "p": 0.504,
                 "sig": false
               }
@@ -550,8 +617,8 @@
                 "value": 0.225,
                 "pairs": 56,
                 "delta": -0.0019,
-                "lo": -0.0123,
-                "hi": 0.0081,
+                "lo": -0.0119,
+                "hi": 0.0077,
                 "p": 1.0,
                 "sig": false
               },
@@ -560,8 +627,8 @@
                 "value": 0.229,
                 "pairs": 56,
                 "delta": -0.0064,
-                "lo": -0.022,
-                "hi": 0.0092,
+                "lo": -0.0213,
+                "hi": 0.008,
                 "p": 0.894,
                 "sig": false
               }
@@ -579,8 +646,8 @@
                 "value": 0.701,
                 "pairs": 56,
                 "delta": -0.0112,
-                "lo": -0.0383,
-                "hi": 0.0147,
+                "lo": -0.0375,
+                "hi": 0.013,
                 "p": 0.419,
                 "sig": false
               },
@@ -589,8 +656,8 @@
                 "value": 0.684,
                 "pairs": 56,
                 "delta": 0.0051,
-                "lo": -0.0517,
-                "hi": 0.0578,
+                "lo": -0.0532,
+                "hi": 0.0592,
                 "p": 0.419,
                 "sig": false
               }
@@ -608,8 +675,8 @@
                 "value": 0.922,
                 "pairs": 56,
                 "delta": -0.0251,
-                "lo": -0.2675,
-                "hi": 0.2293,
+                "lo": -0.2757,
+                "hi": 0.2467,
                 "p": 0.683,
                 "sig": false
               },
@@ -618,8 +685,8 @@
                 "value": 1.341,
                 "pairs": 56,
                 "delta": -0.4354,
-                "lo": -0.8211,
-                "hi": -0.062,
+                "lo": -0.8424,
+                "hi": -0.0464,
                 "p": 0.01,
                 "sig": true
               }
@@ -637,8 +704,8 @@
                 "value": 1.433,
                 "pairs": 56,
                 "delta": 0.0311,
-                "lo": -0.0942,
-                "hi": 0.1715,
+                "lo": -0.0931,
+                "hi": 0.1664,
                 "p": 0.497,
                 "sig": false
               },
@@ -647,8 +714,8 @@
                 "value": 1.486,
                 "pairs": 56,
                 "delta": -0.0334,
-                "lo": -0.2548,
-                "hi": 0.2061,
+                "lo": -0.246,
+                "hi": 0.2163,
                 "p": 1.0,
                 "sig": false
               }
@@ -666,8 +733,8 @@
                 "value": 1.602,
                 "pairs": 56,
                 "delta": -0.1709,
-                "lo": -0.3013,
-                "hi": -0.0509,
+                "lo": -0.3026,
+                "hi": -0.0493,
                 "p": 0.229,
                 "sig": true
               },
@@ -676,8 +743,8 @@
                 "value": 1.473,
                 "pairs": 56,
                 "delta": -0.0422,
-                "lo": -0.1497,
-                "hi": 0.054,
+                "lo": -0.1478,
+                "hi": 0.0593,
                 "p": 0.894,
                 "sig": false
               }
@@ -695,8 +762,8 @@
                 "value": 1.755,
                 "pairs": 56,
                 "delta": -0.1796,
-                "lo": -0.3495,
-                "hi": -0.0129,
+                "lo": -0.3588,
+                "hi": -0.0193,
                 "p": 0.504,
                 "sig": true
               },
@@ -705,8 +772,8 @@
                 "value": 1.556,
                 "pairs": 56,
                 "delta": 0.0192,
-                "lo": -0.1049,
-                "hi": 0.1473,
+                "lo": -0.112,
+                "hi": 0.1459,
                 "p": 0.504,
                 "sig": false
               }
@@ -724,8 +791,8 @@
                 "value": 6.514,
                 "pairs": 56,
                 "delta": -0.3143,
-                "lo": -0.7875,
-                "hi": 0.1715,
+                "lo": -0.7858,
+                "hi": 0.1501,
                 "p": 0.161,
                 "sig": false
               },
@@ -734,8 +801,8 @@
                 "value": 6.68,
                 "pairs": 56,
                 "delta": -0.4804,
-                "lo": -1.2304,
-                "hi": 0.2733,
+                "lo": -1.218,
+                "hi": 0.2661,
                 "p": 0.126,
                 "sig": false
               }
@@ -774,6 +841,361 @@
       },
       "sha256": "98f549c2d618b298d726a933b14cdac241147d1f672db4b5a6b20f1165bf2c7b",
       "size": 86468593
+    },
+    {
+      "category": "base",
+      "name": "atlas-v04",
+      "kind": "base_model",
+      "weights": "atlas-v04.safetensors",
+      "aliases": [
+        "atlas_v04_ema",
+        "atlas_v04"
+      ],
+      "base": "atlas-v03",
+      "arch": "atlas-bypass-pitch",
+      "trainer": "atlas_bypass",
+      "timbre_trainer": "anchor_opt",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "step": 112576,
+      "created": "2026-09-28",
+      "note": "Atlas-v0.4：从 atlas-v03 接着训 + 全量微调（解冻主干，整个模型都训）。4 epoch / 112,576 微批 / 7.03 h；LR cosine 1e-5→2e-7（warmup 200）—— 起点比 v03 的 2e-5 低一半。训后核对：主干 102/103 张量已更新（最大偏差 0.0277）—— 全量生效。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v04/atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v04",
+      "bench": {
+        "date": "2026-09-28",
+        "n_items": 56,
+        "fingerprint": "9e0bffd73d5c",
+        "runs": [
+          "20260927_atlas_v03",
+          "20260927_full",
+          "20260928_atlas_v04"
+        ],
+        "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
+        "metrics": [
+          {
+            "key": "__score__",
+            "label": "综合分",
+            "direction": "越大越好",
+            "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+            "value": 56.021,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 55.913,
+                "pairs": 56,
+                "delta": 0.1089,
+                "lo": -1.4823,
+                "hi": 1.6701,
+                "p": 0.419,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 54.045,
+                "pairs": 56,
+                "delta": 1.9768,
+                "lo": -0.6575,
+                "hi": 4.3377,
+                "p": 0.281,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "sv_gain",
+            "label": "sv_gain",
+            "direction": "越大越好",
+            "desc": "像目标 − 像源；转换的区分度",
+            "value": 0.216,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.215,
+                "pairs": 56,
+                "delta": 0.002,
+                "lo": -0.0118,
+                "hi": 0.0147,
+                "p": 1.0,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 0.194,
+                "pairs": 56,
+                "delta": 0.0223,
+                "lo": -0.0019,
+                "hi": 0.0445,
+                "p": 0.081,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "sv_ref",
+            "label": "sv_ref",
+            "direction": "越大越好",
+            "desc": "与目标人**真实录音**的相似度（外部参照）",
+            "value": 0.438,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.437,
+                "pairs": 56,
+                "delta": 0.0005,
+                "lo": -0.0091,
+                "hi": 0.01,
+                "p": 1.0,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 0.423,
+                "pairs": 56,
+                "delta": 0.0144,
+                "lo": -0.0057,
+                "hi": 0.0338,
+                "p": 0.081,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "sv_src",
+            "label": "sv_src",
+            "direction": "越小越好",
+            "desc": "与源说话人的相似度 ⇒ 身份泄漏",
+            "value": 0.221,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.223,
+                "pairs": 56,
+                "delta": -0.0015,
+                "lo": -0.0097,
+                "hi": 0.0073,
+                "p": 0.504,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 0.229,
+                "pairs": 56,
+                "delta": -0.0079,
+                "lo": -0.0231,
+                "hi": 0.0083,
+                "p": 0.689,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_corr",
+            "label": "f0_corr",
+            "direction": "越大越好",
+            "desc": "与源的 F0 轨迹相关 ⇒ 韵律跟随。⚠️ **分辨力差**：原始 Hz 上逐帧相关，逐句 SD 达 0.21 （按功效分析要检出 0.005 的差需 n≈13,000）—— 判音高请优先看下面几个",
+            "value": 0.623,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.689,
+                "pairs": 56,
+                "delta": -0.0664,
+                "lo": -0.1483,
+                "hi": -0.0057,
+                "p": 1.0,
+                "sig": true
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 0.684,
+                "pairs": 56,
+                "delta": -0.0613,
+                "lo": -0.1636,
+                "hi": 0.0246,
+                "p": 1.0,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_shift",
+            "label": "f0_shift",
+            "direction": "接近 0",
+            "desc": "中位音高差（半音，带符号）⇒ 整体音高被搬走多少",
+            "value": 0.975,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.906,
+                "pairs": 56,
+                "delta": 0.0691,
+                "lo": -0.1109,
+                "hi": 0.2647,
+                "p": 0.784,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 1.341,
+                "pairs": 56,
+                "delta": -0.3662,
+                "lo": -0.7711,
+                "hi": 0.0506,
+                "p": 0.022,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_dev",
+            "label": "f0_dev",
+            "direction": "越小越好",
+            "desc": "去掉整体搬移后的中位绝对偏差（半音）⇒ 音高轨迹跟得准不准",
+            "value": 1.404,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 1.452,
+                "pairs": 56,
+                "delta": -0.0486,
+                "lo": -0.2211,
+                "hi": 0.0934,
+                "p": 0.894,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 1.486,
+                "pairs": 56,
+                "delta": -0.082,
+                "lo": -0.2429,
+                "hi": 0.0805,
+                "p": 0.894,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_deriv_x",
+            "label": "f0_deriv_x",
+            "direction": "接近 1",
+            "desc": "平均绝对导数比（生成/源，半音/秒）⇒ 音高平滑度",
+            "value": 1.522,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 1.431,
+                "pairs": 56,
+                "delta": 0.0909,
+                "lo": 0.0046,
+                "hi": 0.1876,
+                "p": 1.0,
+                "sig": true
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 1.473,
+                "pairs": 56,
+                "delta": 0.0487,
+                "lo": -0.034,
+                "hi": 0.1341,
+                "p": 0.689,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_jitter_x",
+            "label": "f0_jitter_x",
+            "direction": "接近 1",
+            "desc": "抖动比（生成/源）⇒ 细微抖动",
+            "value": 1.677,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 1.575,
+                "pairs": 56,
+                "delta": 0.1024,
+                "lo": 0.0143,
+                "hi": 0.1969,
+                "p": 0.689,
+                "sig": true
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 1.556,
+                "pairs": 56,
+                "delta": 0.1216,
+                "lo": -0.0017,
+                "hi": 0.245,
+                "p": 0.141,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "f0_jump",
+            "label": "f0_jump",
+            "direction": "越小越好",
+            "desc": "生成轨 |d|>30 半音/秒 的帧占比（%）⇒ 局部跳变",
+            "value": 6.561,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 6.2,
+                "pairs": 56,
+                "delta": 0.3607,
+                "lo": -0.1197,
+                "hi": 0.8108,
+                "p": 0.22,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 6.68,
+                "pairs": 56,
+                "delta": -0.1196,
+                "lo": -0.85,
+                "hi": 0.6002,
+                "p": 0.683,
+                "sig": false
+              }
+            ]
+          },
+          {
+            "key": "dur_ratio",
+            "label": "dur_ratio",
+            "direction": "接近 1",
+            "desc": "生成/源 时长比 ⇒ 掉字、拖长",
+            "value": 0.963,
+            "vs": [
+              {
+                "name": "atlas-v03",
+                "value": 0.963,
+                "pairs": 56,
+                "delta": 0.0,
+                "lo": 0.0,
+                "hi": 0.0,
+                "p": 1.0,
+                "sig": false
+              },
+              {
+                "name": "voxmage-ft-1.1",
+                "value": 0.963,
+                "pairs": 56,
+                "delta": 0.0,
+                "lo": 0.0,
+                "hi": 0.0,
+                "p": 1.0,
+                "sig": false
+              }
+            ]
+          }
+        ]
+      },
+      "sha256": "eb83ad53fe9e3a5d9d627a6a5b16bb3fd1bf2fabe8f8e9cea16b6beb29fd4614",
+      "size": 86473594
     },
     {
       "category": "base",
@@ -845,6 +1267,14 @@
         ],
         "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
         "metrics": [
+          {
+            "key": "__score__",
+            "label": "综合分",
+            "direction": "越大越好",
+            "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+            "value": 54.045,
+            "vs": []
+          },
           {
             "key": "sv_gain",
             "label": "sv_gain",
@@ -1113,6 +1543,23 @@
     },
     {
       "category": "timbre",
+      "name": "AISHELL-SSB0005@atlas-v04",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0005@atlas-v04.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v04"
+      ],
+      "base": "atlas-v03",
+      "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0005@atlas-v04/AISHELL-SSB0005@atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0005@atlas-v04",
+      "sha256": "e788f163dc83c1cde9a7e3b26f5d2f15892f933545ad4bc9eafbcafc8a245c3f",
+      "size": 7501
+    },
+    {
+      "category": "timbre",
       "name": "AISHELL-SSB0005@ft-1.0",
       "kind": "timbre",
       "vector": "AISHELL-SSB0005@ft-1.0.npy",
@@ -1284,6 +1731,23 @@
     },
     {
       "category": "timbre",
+      "name": "AISHELL-SSB0011@atlas-v04",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0011@atlas-v04.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v04"
+      ],
+      "base": "atlas-v03",
+      "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0011@atlas-v04/AISHELL-SSB0011@atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0011@atlas-v04",
+      "sha256": "0fbb571b53cc749081f5697f2e1f240514eee37b874756a69c97431ccffff751",
+      "size": 7296
+    },
+    {
+      "category": "timbre",
       "name": "AISHELL-SSB0011@ft-1.0",
       "kind": "timbre",
       "vector": "AISHELL-SSB0011@ft-1.0.npy",
@@ -1437,6 +1901,23 @@
       "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@atlas-v03",
       "sha256": "9e1ab6793979eefdb3f482926e89ae19a2bd50e55ed7ed13bd3ce258e3c8a800",
       "size": 6652
+    },
+    {
+      "category": "timbre",
+      "name": "AISHELL-SSB0016@atlas-v04",
+      "kind": "timbre",
+      "vector": "AISHELL-SSB0016@atlas-v04.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v04"
+      ],
+      "base": "atlas-v03",
+      "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@atlas-v04/AISHELL-SSB0016@atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@atlas-v04",
+      "sha256": "91a63c1bf5b1be43ba1ecd784ab7a1a37e72c6bee7412c326a56abc04a6def8d",
+      "size": 7477
     },
     {
       "category": "timbre",
@@ -1806,6 +2287,23 @@
       "note": "锚点在 voxmage-ft120ms-2.0 上用 anchor_opt 优化（凸包+精修）；换权重需重建",
       "download": "",
       "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "EN-Alto-1@atlas-v04",
+      "kind": "timbre",
+      "vector": "EN-Alto-1@atlas-v04.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v04"
+      ],
+      "base": "atlas-v03",
+      "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 D:/datasets/gts_selfrecon/anchors；语料 finetune/lists/anchor_EN-Alto-1.list，40 句/次）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-EN-Alto-1@atlas-v04/EN-Alto-1@atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-EN-Alto-1@atlas-v04",
+      "sha256": "e253121837f42af604c6211e2e45cab81b90e6a32919d88a1455e0f6d242a9c6",
+      "size": 6877
     },
     {
       "category": "timbre",
@@ -4390,6 +4888,23 @@
       "f0_hz": 273,
       "download": "",
       "release": ""
+    },
+    {
+      "category": "timbre",
+      "name": "ZH-Alto-1@atlas-v04",
+      "kind": "timbre",
+      "vector": "ZH-Alto-1@atlas-v04.npy",
+      "timbre_loader": "xvector_npy",
+      "timbre_adapter": null,
+      "models": [
+        "atlas-v04"
+      ],
+      "base": "atlas-v03",
+      "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 D:/datasets/gts_selfrecon/anchors；语料 finetune/lists/anchor_ZH-Alto-1.list，40 句/次）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+      "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-ZH-Alto-1@atlas-v04/ZH-Alto-1@atlas-v04.zip",
+      "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-ZH-Alto-1@atlas-v04",
+      "sha256": "bb7e16a9c5f584c386ed65a8006e36b9ce90884f0d1d27b95f74f2115920a3f4",
+      "size": 6764
     },
     {
       "category": "timbre",

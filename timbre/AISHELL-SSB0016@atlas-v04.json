@@ -1,0 +1,16 @@
+{
+  "name": "AISHELL-SSB0016@atlas-v04",
+  "kind": "timbre",
+  "vector": "AISHELL-SSB0016@atlas-v04.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "atlas-v04"
+  ],
+  "base": "atlas-v03",
+  "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包+300 步）；语料取自基准测试的锚点集（8 句/目标），规格低于 @ft-1.1 / @pp* 那批（<=40 句）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@atlas-v04/AISHELL-SSB0016@atlas-v04.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@atlas-v04",
+  "sha256": "91a63c1bf5b1be43ba1ecd784ab7a1a37e72c6bee7412c326a56abc04a6def8d",
+  "size": 7477
+}

@@ -26,6 +26,14 @@
     "how": "finetune/voxmodels.py --bench（均值与配对检验复用 finetune/bench.py，文案复用 bench_leaderboard.py::COLS）",
     "metrics": [
       {
+        "key": "__score__",
+        "label": "综合分",
+        "direction": "越大越好",
+        "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
+        "value": 54.045,
+        "vs": []
+      },
+      {
         "key": "sv_gain",
         "label": "sv_gain",
         "direction": "越大越好",
