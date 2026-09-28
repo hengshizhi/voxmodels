@@ -320,6 +320,21 @@ def drop_releases(ids: list, repo: str) -> tuple:
     return done, "；".join(errs)
 
 
+def _lbl(m: dict) -> str:
+    """指标在页面上的写法：优先 `label`。
+
+    综合分的 key 是 `__score__`（内部名），直接印出来很难看 —— 而 `label`（`综合分`）
+    本来就是给人看的、索引里就带着，没必要在这里另译一份。
+    """
+    return str(m.get("label") or m.get("key") or "")
+
+
+def _val(m: dict) -> str:
+    """指标值：综合分是 0–100，三位小数是噪声；其余保持三位（与榜单口径一致）。"""
+    v = m.get("value")
+    return "—" if v is None else (f"{v:.1f}" if m.get("key") == "__score__" else f"{v:.3f}")
+
+
 def _fmt_delta(v: dict) -> str:
     """一个参照的 Δ 单元格：`+0.0203 [−0.0049, +0.0453] ★`。缺数就印 `—`（不猜）。"""
     d = v.get("delta")
@@ -353,16 +368,16 @@ def _bench_md(man: dict) -> list:
          "|---|---|" + "---|" * len(refs)]
     for m in ms:
         by = {v.get("name"): v for v in (m.get("vs") or [])}
-        cells = [f"`{m['key']}`（{m.get('direction') or ''}）", f"{m['value']:.3f}"]
+        cells = [f"{_lbl(m)}（{m.get('direction') or ''}）", _val(m)]
         cells += [_fmt_delta(by[r]) if r in by else "—" for r in refs]
         L.append("| " + " | ".join(cells) + " |")
     L += ["", "- Δ 是**配对**均值差（同一批用例逐例配对）+ bootstrap 95% 置信区间；"
               "★ = 区间不含 0，即**显著**。"]
-    sig = [(m["key"], v["name"], v.get("delta"))
+    sig = [(_lbl(m), v["name"], v.get("delta"))
            for m in ms for v in (m.get("vs") or []) if v.get("sig")]
     if sig:
         L.append("- 达到显著的只有：" + "、".join(
-            (f"`{k}` 相对 `{r}`（{d:+.4f}）" if d is not None else f"`{k}` 相对 `{r}`")
+            (f"{k} 相对 `{r}`（{d:+.4f}）" if d is not None else f"{k} 相对 `{r}`")
             for k, r, d in sig) + "。")
     else:
         L.append("- **没有任何差异达到显著** —— 这些数字在本题量下分不出高下。")
@@ -373,7 +388,7 @@ def _bench_md(man: dict) -> list:
                  " —— 两侧考卷不完全相同，比出来的差要留个心眼。")
     L += ["", "**指标口径**（与 MeanVC2 的 `finetune/bench_leaderboard.py` 同一套、同为均值口径）", ""]
     for m in ms:
-        L.append(f"- `{m['key']}`（{m.get('direction') or ''}）：{m.get('desc') or ''}")
+        L.append(f"- **{_lbl(m)}**（{m.get('direction') or ''}）：{m.get('desc') or ''}")
     if b.get("runs"):
         L += ["", "- 数据来源：`bench/runs/` 下的 "
                   + "、".join(f"`{r}`" for r in b["runs"]) + "。"]
