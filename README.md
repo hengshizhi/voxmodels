@@ -117,12 +117,14 @@ voxmodels/
    > zip 内是 `cf.json`、库里是 `<Name>.json` —— 这是**刻意**的。应用按 `cf.json` 读
    > （`app/models.py`、`finetune/registry.py` 都硬编码这个名字），所以解压后**改都不用改**。
 
-3. 放进 MeanVC2 对应目录：
+3. 放进**软件根目录**（启动器 / `vc.py` 所在的那个文件夹）下的对应目录：
 
-   | 类型 | 目标目录 |
+   | 类型 | 目标目录（相对软件根目录） |
    |---|---|
    | 模型 | `finetune/exports/<Name>/` |
    | 音色 | 任一音色根：`app/presets/`（推荐，用户装的）、`finetune/anchors_speech/`（说话人）、`finetune/anchors_ft/`（歌手）、`finetune/anchors_models/`（按权重重建的） |
+
+   > ⚠️ 是**软件根目录**，不是本仓库，也不需要 clone 源码 —— 下载方手里是装好的软件。
 
 4. **音色必须在它 `models` 列出的那份权重上使用**。锚点是针对某一份权重的响应面优化出来的，
    换权重会明显退化 —— 这不是"兼容性小问题"，是设计如此（换权重必须重建锚点）。

@@ -9,6 +9,7 @@
     python release.py --kind timbre --name 冷冷v2                # 只打包，不发布
     python release.py --kind timbre --name 冷冷v2 --publish
     python release.py --kind timbre --all --match '^AISHELL' --exclude '@pp' --publish
+    python release.py --all --refresh-notes                     # 只重写已发布正文（模板/索引改了之后）
 
 ⚠️ 五个刻意的设计（改之前先读）：
 
@@ -39,6 +40,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import zipfile
 
@@ -61,10 +63,14 @@ RETRY_ERR = ("TLS handshake timeout", "failed to receive handshake", "TLS handsh
 GOOD_STATUS = ("已发布", "已存在", "覆盖", "草稿已发布", "补传资产")
 
 KIND_CN = {"base": "基础模型", "derivation": "微调模型", "timbre": "音色"}
+# 安装位置一律**相对"软件根目录"**说，不写 "MeanVC2 的 …"：下载方手里是装好的软件
+# （启动器 / `vc.py` 所在的那个文件夹），不是本仓库 —— 写仓库名会让人以为要先 clone 源码。
+# 实测踩过：发布页上一直写着 "放到 MeanVC2 的 `finetune/exports/<Name>/`"（2026-09-29 改）。
+ROOT_CN = "**软件根目录**（启动器 / `vc.py` 所在的那个文件夹）"
 INSTALL_CN = {
-    "base": "解压后把 `<Name>/` 整个放到 MeanVC2 的 `finetune/exports/<Name>/`。",
-    "derivation": "解压后把 `<Name>/` 整个放到 MeanVC2 的 `finetune/exports/<Name>/`。",
-    "timbre": ("解压后把 `<Name>/` 整个放到 MeanVC2 的任一音色根（`app/presets/` 或 "
+    "base": f"解压后把 `<Name>/` 整个放到 {ROOT_CN}的 `finetune/exports/<Name>/`。",
+    "derivation": f"解压后把 `<Name>/` 整个放到 {ROOT_CN}的 `finetune/exports/<Name>/`。",
+    "timbre": (f"解压后把 `<Name>/` 整个放到 {ROOT_CN}的任一音色根（`app/presets/` 或 "
                "`finetune/anchors_speech/` 等）。**它只对上面列出的适配模型有效** —— "
                "锚点是针对某一份权重的响应面优化的，换权重必须重建。"),
 }
@@ -473,6 +479,53 @@ def publish(category: str, name: str, man: dict, *, repo: str, force: bool,
     return "已发布", d()
 
 
+def _release_body(tag: str, repo: str):
+    """当前 release 正文（查不到返回 `None`）。"""
+    r = gh("release", "view", tag, "--repo", repo, "--json", "body", "--jq", ".body")
+    return r.stdout if r.returncode == 0 else None
+
+
+def refresh_notes(category: str, name: str, man: dict, *, repo: str) -> tuple:
+    """把**已发布**的 release 正文用当前索引重渲染。**只改正文**：资产、tag、链接一个都不动。
+
+    为什么需要它：正文是**发布那一刻**从索引渲染的（`notes_for`），模板后来改了（或索引里的
+    跑分块刷新了），已发布的页面不会自己跟着变。实测 2026-09-29：34 个页面全带着旧写法
+    "放到 MeanVC2 的 `finetune/exports/`"—— 这句话对下载方是错的（人家手里是装好的软件，
+    不是本仓库），只能靠本函数回填。
+
+    与 `publish` 同一套安全纪律：草稿 / 有残留草稿的 tag **一律不动**（`gh release edit` 指向
+    哪个是未定义的，见 `release_state`），正文已一致时也不白改（少一次远端写）。
+    """
+    tag = tag_for(category, name)
+    st, _nassets, strays = release_state(tag, repo)
+    if st is None:
+        return "网络未通", f"查不到 {tag} 的状态 ⇒ 未改动"
+    if st is not True:
+        return "未发布", "没有已发布的 release ⇒ 跳过（下次发布自然用新模板）"
+    if strays:
+        return "需先清理草稿", (f"该 tag 下另有 {len(strays)} 个残留草稿 ⇒ 怕改错目标，未改动远端"
+                              "（加 --cleanup-drafts 可先删掉它们）")
+    now = _release_body(tag, repo)
+    if now is None:
+        return "读正文失败", "拿不到当前正文 ⇒ 未改动"
+    want = notes_for(category, man)
+    if now.strip() == want.strip():
+        return "未变", ""
+    fd, tmp = tempfile.mkstemp(suffix=".md")           # 正文多行：走文件比走命令行参数稳
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(want)
+        r = gh("release", "edit", tag, "--repo", repo, "--notes-file", tmp)
+    finally:
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
+    if r.returncode != 0:
+        return "刷新失败", ((r.stderr or r.stdout or "").strip()[:150])
+    return "已刷新", "正文已按当前索引重写（资产未动）"
+
+
 def backfill(category: str, name: str, repo: str, extra: dict | None = None) -> bool:
     """把两个链接（+ 可选的 `sha256` / `size`）写回库索引，保留其余字段与顺序。
 
@@ -521,6 +574,8 @@ def probe_size(url: str, timeout: int = 20) -> int:
 
 # 真正**上传过**的状态（只有这些状态下的 sha256 / size 才可信，见 backfill 的注释）
 UPLOADED_STATUS = ("已发布", "草稿已发布", "补传资产", "覆盖")
+# `--refresh-notes` 算"办成了"的状态："未变"是好事（正文已经对了，不白改远端）。
+REFRESH_OK = ("已刷新", "未变")
 
 
 def write_aggregate_index(repo: str, *, probe: bool = False) -> dict:
@@ -591,6 +646,8 @@ def main() -> int:
                     help="生成聚合索引 index.json（238 条合成一个文件，客户端只请求它）")
     ap.add_argument("--probe", action="store_true",
                     help="配合 --index：对缺 size 的条目发 HEAD 补大小（早于该字段的老条目）")
+    ap.add_argument("--refresh-notes", action="store_true",
+                    help="只把**已发布**的 release 正文按当前索引重渲染（资产 / tag 不动）")
     args = ap.parse_args()
 
     if args.index:
@@ -646,6 +703,19 @@ def main() -> int:
             log(notes_for(cat, ents[(cat, name)]))
             log()
         return 0
+
+    if args.refresh_notes:                          # 同样放在 --name / --match / --limit 之后
+        log(f"仓库 {args.repo}    库根 {LIB_ROOT}    只重写正文（资产与 tag 不动）")
+        log()
+        ok = fail = 0
+        for cat, name in keys:
+            status, detail = refresh_notes(cat, name, ents[(cat, name)], repo=args.repo)
+            log(f"  {cat}/{name:<32} [{status}]" + (f"  {detail}" if detail else ""))
+            ok += status in REFRESH_OK
+            fail += status not in REFRESH_OK and status != "未发布"
+        log()
+        log(f"完成：成功 {ok} / 失败 {fail}")
+        return 1 if fail else 0
 
     meanvc2 = find_meanvc2(args.meanvc2)
     os.makedirs(DIST_DIR, exist_ok=True)
