@@ -1,0 +1,16 @@
+{
+  "name": "EN-Alto-1@atlas-v05",
+  "kind": "timbre",
+  "vector": "EN-Alto-1@atlas-v05.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "atlas-v05"
+  ],
+  "base": "atlas-v04",
+  "note": "在 atlas-v05 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 D:/datasets/gts_selfrecon/anchors；语料 finetune/lists/anchor_{name}.list，40 句/次）。atlas-v05 = 从 atlas-v04 接着训 + 全量微调（1 epoch，LR cosine 5e-6→1e-7）+ 新增歌唱语料（M4/OpenCpop 各 3x，清单 153,836 行）。锚点只对它自己那份权重最优，换权重需重跑。",
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-EN-Alto-1@atlas-v05/EN-Alto-1@atlas-v05.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-EN-Alto-1@atlas-v05",
+  "sha256": "9df8e89a2394f3558b377a9e619d100965722eed387918b606efd8d04d1426f1",
+  "size": 7312
+}

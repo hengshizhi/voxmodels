@@ -1,30 +1,27 @@
 {
-  "name": "atlas-v04",
+  "name": "atlas-v05",
   "kind": "base_model",
-  "weights": "atlas-v04.safetensors",
+  "weights": "atlas-v05.safetensors",
   "aliases": [
-    "atlas_v04_ema",
-    "atlas_v04"
+    "atlas_v05_ema",
+    "atlas_v05"
   ],
-  "base": "atlas-v03",
+  "base": "atlas-v04",
   "arch": "atlas-bypass-pitch",
   "trainer": "atlas_bypass",
   "timbre_trainer": "anchor_opt",
   "timbre_loader": "xvector_npy",
   "timbre_adapter": null,
-  "step": 112576,
-  "created": "2026-09-28",
-  "note": "Atlas-v0.4：从 atlas-v03 接着训 + 全量微调（解冻主干，整个模型都训）。4 epoch / 112,576 微批 / 7.03 h；LR cosine 1e-5→2e-7（warmup 200）—— 起点比 v03 的 2e-5 低一半。训后核对：主干 102/103 张量已更新（最大偏差 0.0277）—— 全量生效。",
-  "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v04/atlas-v04.zip",
-  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v04",
-  "sha256": "eb83ad53fe9e3a5d9d627a6a5b16bb3fd1bf2fabe8f8e9cea16b6beb29fd4614",
-  "size": 86473594,
+  "step": 38459,
+  "created": "2026-09-29",
+  "note": "Atlas-v0.5：从 atlas-v04 起 + 全量微调 + 新增歌唱语料（M4 3x / OpenCpop 3x，共 153,836 行）；1 epoch / 2.13 h；LR cosine 5e-6 -> 1e-7（warmup 200）。训后核对：主干 102/103 张量已更新（最大偏差 6.68e-3）—— 全量生效。",
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v05/atlas-v05.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v05",
   "bench": {
     "date": "2026-09-29",
     "n_items": 56,
     "fingerprint": "9e0bffd73d5c",
     "runs": [
-      "20260927_atlas_v03",
       "20260927_full",
       "20260929_v05_vs_v04"
     ],
@@ -35,27 +32,27 @@
         "label": "综合分",
         "direction": "越大越好",
         "desc": "加权综合分（0–100）：各列按方向归一成 0–1 好度后加权求和。权重与归一化边界见 finetune/bench.py 的 SCORE_WEIGHTS / SCORE_BANDS；`f0_corr`（自带「分辨力差」）与 `cer`（只对中文源有效）权重为 0。**它是排序键、不是验收判据** —— 判好坏请看逐列原始值 + 试听",
-        "value": 56.021,
+        "value": 58.118,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 55.913,
+            "name": "atlas-v04",
+            "value": 56.021,
             "pairs": 56,
-            "delta": 0.1089,
-            "lo": -1.4823,
-            "hi": 1.6701,
-            "p": 0.419,
-            "sig": false
+            "delta": 2.0964,
+            "lo": 0.6247,
+            "hi": 3.4947,
+            "p": 0.081,
+            "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 54.045,
             "pairs": 56,
-            "delta": 1.9768,
-            "lo": -0.6575,
-            "hi": 4.3377,
-            "p": 0.281,
-            "sig": false
+            "delta": 4.0732,
+            "lo": 1.6999,
+            "hi": 6.2929,
+            "p": 0.002,
+            "sig": true
           }
         ]
       },
@@ -64,27 +61,27 @@
         "label": "sv_gain",
         "direction": "越大越好",
         "desc": "像目标 − 像源；转换的区分度",
-        "value": 0.216,
+        "value": 0.24,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 0.215,
+            "name": "atlas-v04",
+            "value": 0.216,
             "pairs": 56,
-            "delta": 0.002,
-            "lo": -0.0118,
-            "hi": 0.0147,
-            "p": 1.0,
-            "sig": false
+            "delta": 0.0234,
+            "lo": 0.0107,
+            "hi": 0.036,
+            "p": 0.002,
+            "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 0.194,
             "pairs": 56,
-            "delta": 0.0223,
-            "lo": -0.0019,
-            "hi": 0.0445,
-            "p": 0.081,
-            "sig": false
+            "delta": 0.0457,
+            "lo": 0.0234,
+            "hi": 0.0688,
+            "p": 0.0,
+            "sig": true
           }
         ]
       },
@@ -93,27 +90,27 @@
         "label": "sv_ref",
         "direction": "越大越好",
         "desc": "与目标人**真实录音**的相似度（外部参照）",
-        "value": 0.438,
+        "value": 0.447,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 0.437,
+            "name": "atlas-v04",
+            "value": 0.438,
             "pairs": 56,
-            "delta": 0.0005,
-            "lo": -0.0091,
-            "hi": 0.01,
-            "p": 1.0,
-            "sig": false
+            "delta": 0.009,
+            "lo": 0.0002,
+            "hi": 0.018,
+            "p": 0.044,
+            "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 0.423,
             "pairs": 56,
-            "delta": 0.0144,
-            "lo": -0.0057,
-            "hi": 0.0338,
-            "p": 0.081,
-            "sig": false
+            "delta": 0.0235,
+            "lo": 0.0026,
+            "hi": 0.0422,
+            "p": 0.419,
+            "sig": true
           }
         ]
       },
@@ -122,27 +119,27 @@
         "label": "sv_src",
         "direction": "越小越好",
         "desc": "与源说话人的相似度 ⇒ 身份泄漏",
-        "value": 0.221,
+        "value": 0.207,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 0.223,
+            "name": "atlas-v04",
+            "value": 0.221,
             "pairs": 56,
-            "delta": -0.0015,
-            "lo": -0.0097,
-            "hi": 0.0073,
-            "p": 0.504,
-            "sig": false
+            "delta": -0.0144,
+            "lo": -0.0224,
+            "hi": -0.0066,
+            "p": 0.005,
+            "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 0.229,
             "pairs": 56,
-            "delta": -0.0079,
-            "lo": -0.0231,
-            "hi": 0.0083,
-            "p": 0.689,
-            "sig": false
+            "delta": -0.0222,
+            "lo": -0.0363,
+            "hi": -0.0077,
+            "p": 0.081,
+            "sig": true
           }
         ]
       },
@@ -151,26 +148,26 @@
         "label": "f0_corr",
         "direction": "越大越好",
         "desc": "与源的 F0 轨迹相关 ⇒ 韵律跟随。⚠️ **分辨力差**：原始 Hz 上逐帧相关，逐句 SD 达 0.21 （按功效分析要检出 0.005 的差需 n≈13,000）—— 判音高请优先看下面几个",
-        "value": 0.623,
+        "value": 0.624,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 0.689,
+            "name": "atlas-v04",
+            "value": 0.623,
             "pairs": 56,
-            "delta": -0.0664,
-            "lo": -0.1483,
-            "hi": -0.0057,
-            "p": 1.0,
-            "sig": true
+            "delta": 0.0015,
+            "lo": -0.0636,
+            "hi": 0.0669,
+            "p": 0.504,
+            "sig": false
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 0.684,
             "pairs": 56,
-            "delta": -0.0613,
-            "lo": -0.1636,
-            "hi": 0.0246,
-            "p": 1.0,
+            "delta": -0.0598,
+            "lo": -0.1545,
+            "hi": 0.0145,
+            "p": 0.419,
             "sig": false
           }
         ]
@@ -180,26 +177,26 @@
         "label": "f0_shift",
         "direction": "接近 0",
         "desc": "中位音高差（半音，带符号）⇒ 整体音高被搬走多少",
-        "value": 0.975,
+        "value": 1.013,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 0.906,
+            "name": "atlas-v04",
+            "value": 0.975,
             "pairs": 56,
-            "delta": 0.0691,
-            "lo": -0.1109,
-            "hi": 0.2647,
-            "p": 0.784,
+            "delta": 0.038,
+            "lo": -0.0722,
+            "hi": 0.1498,
+            "p": 0.892,
             "sig": false
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 1.341,
             "pairs": 56,
-            "delta": -0.3662,
-            "lo": -0.7711,
-            "hi": 0.0506,
-            "p": 0.022,
+            "delta": -0.3282,
+            "lo": -0.7247,
+            "hi": 0.0614,
+            "p": 0.044,
             "sig": false
           }
         ]
@@ -209,26 +206,26 @@
         "label": "f0_dev",
         "direction": "越小越好",
         "desc": "去掉整体搬移后的中位绝对偏差（半音）⇒ 音高轨迹跟得准不准",
-        "value": 1.404,
+        "value": 1.343,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 1.452,
+            "name": "atlas-v04",
+            "value": 1.404,
             "pairs": 56,
-            "delta": -0.0486,
-            "lo": -0.2211,
-            "hi": 0.0934,
-            "p": 0.894,
+            "delta": -0.0605,
+            "lo": -0.1813,
+            "hi": 0.0688,
+            "p": 0.177,
             "sig": false
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 1.486,
             "pairs": 56,
-            "delta": -0.082,
-            "lo": -0.2429,
-            "hi": 0.0805,
-            "p": 0.894,
+            "delta": -0.1425,
+            "lo": -0.3368,
+            "hi": 0.0382,
+            "p": 0.229,
             "sig": false
           }
         ]
@@ -238,26 +235,26 @@
         "label": "f0_deriv_x",
         "direction": "接近 1",
         "desc": "平均绝对导数比（生成/源，半音/秒）⇒ 音高平滑度",
-        "value": 1.522,
+        "value": 1.463,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 1.431,
+            "name": "atlas-v04",
+            "value": 1.522,
             "pairs": 56,
-            "delta": 0.0909,
-            "lo": 0.0046,
-            "hi": 0.1876,
-            "p": 1.0,
+            "delta": -0.0586,
+            "lo": -0.125,
+            "hi": -0.0041,
+            "p": 0.229,
             "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 1.473,
             "pairs": 56,
-            "delta": 0.0487,
-            "lo": -0.034,
-            "hi": 0.1341,
-            "p": 0.689,
+            "delta": -0.0099,
+            "lo": -0.0884,
+            "hi": 0.0661,
+            "p": 0.894,
             "sig": false
           }
         ]
@@ -267,26 +264,26 @@
         "label": "f0_jitter_x",
         "direction": "接近 1",
         "desc": "抖动比（生成/源）⇒ 细微抖动",
-        "value": 1.677,
+        "value": 1.599,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 1.575,
+            "name": "atlas-v04",
+            "value": 1.677,
             "pairs": 56,
-            "delta": 0.1024,
-            "lo": 0.0143,
-            "hi": 0.1969,
-            "p": 0.689,
+            "delta": -0.0786,
+            "lo": -0.1643,
+            "hi": -0.0001,
+            "p": 0.01,
             "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 1.556,
             "pairs": 56,
-            "delta": 0.1216,
-            "lo": -0.0017,
-            "hi": 0.245,
-            "p": 0.141,
+            "delta": 0.0431,
+            "lo": -0.0753,
+            "hi": 0.1516,
+            "p": 1.0,
             "sig": false
           }
         ]
@@ -296,26 +293,26 @@
         "label": "f0_jump",
         "direction": "越小越好",
         "desc": "生成轨 |d|>30 半音/秒 的帧占比（%）⇒ 局部跳变",
-        "value": 6.561,
+        "value": 6.493,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": 6.2,
+            "name": "atlas-v04",
+            "value": 6.561,
             "pairs": 56,
-            "delta": 0.3607,
-            "lo": -0.1197,
-            "hi": 0.8108,
-            "p": 0.22,
+            "delta": -0.0679,
+            "lo": -0.4947,
+            "hi": 0.3679,
+            "p": 1.0,
             "sig": false
           },
           {
             "name": "voxmage-ft-1.1",
             "value": 6.68,
             "pairs": 56,
-            "delta": -0.1196,
-            "lo": -0.85,
-            "hi": 0.6002,
-            "p": 0.683,
+            "delta": -0.1875,
+            "lo": -0.9822,
+            "hi": 0.6571,
+            "p": 0.576,
             "sig": false
           }
         ]
@@ -328,7 +325,7 @@
         "value": 0.963,
         "vs": [
           {
-            "name": "atlas-v03",
+            "name": "atlas-v04",
             "value": 0.963,
             "pairs": 56,
             "delta": 0.0,
@@ -354,17 +351,17 @@
         "label": "CER",
         "direction": "越小越好",
         "desc": "字错率；**只对中文源有效**，非中文源天然为空",
-        "value": 0.09,
+        "value": 0.068,
         "vs": [
           {
-            "name": "atlas-v03",
-            "value": null,
+            "name": "atlas-v04",
+            "value": 0.09,
             "pairs": 56,
-            "delta": null,
-            "lo": null,
-            "hi": null,
-            "p": null,
-            "sig": false
+            "delta": -0.0222,
+            "lo": -0.0499,
+            "hi": -0.0013,
+            "p": 0.125,
+            "sig": true
           },
           {
             "name": "voxmage-ft-1.1",
@@ -379,5 +376,7 @@
         ]
       }
     ]
-  }
+  },
+  "sha256": "3f60c40c0a763c8a8868fffe723327a0111efb792fb802642d242dcb2f75eca4",
+  "size": 86473635
 }
