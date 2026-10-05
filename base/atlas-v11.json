@@ -1,0 +1,21 @@
+{
+  "name": "atlas-v11",
+  "kind": "base_model",
+  "weights": "atlas-v11.safetensors",
+  "aliases": [
+    "atlas_v11_v1_ema",
+    "atlas_v11_v1"
+  ],
+  "base": "atlas-v10",
+  "arch": "atlas-bypass-pitch",
+  "cond_front": "fcpe",
+  "trainer": "atlas_bypass",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 200772,
+  "created": "2026-10-05",
+  "note": "v11: 数据扩充 + FCPE 前端 + 发声门修复；2 epoch / 200,772 步",
+  "download": "",
+  "release": ""
+}

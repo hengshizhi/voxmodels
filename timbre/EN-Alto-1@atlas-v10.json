@@ -1,0 +1,14 @@
+{
+  "name": "EN-Alto-1@atlas-v10",
+  "kind": "timbre",
+  "vector": "EN-Alto-1@atlas-v10.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "atlas-v10"
+  ],
+  "base": "atlas-v05",
+  "note": "锚点必须长在 models 列出的那份权重上；换权重需重跑 trainer:anchor_opt",
+  "download": "",
+  "release": ""
+}

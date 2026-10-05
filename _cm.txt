@@ -1,0 +1,28 @@
+sync: 收入 lengleng-atlas-v05-fcpe 及其音色，并给「base 推不出来」的音色写上理由
+
+新增（本机 → 库）：
+  base/lengleng-atlas-v05-fcpe.json              Lengleng 音色联合微调（全量微调 + 锚点一起训）
+  base/atlas-v05-fcpe.json                       v05 配比 + fcpe 口径的 f0 对齐跑
+  base/{atlas-v05-ofz,atlas-v05-ofz-joint,atlas-v05-ofz2,atlas-v05-pc}.json
+  base/{atlas-v10,atlas-v11,atlas-v11-lengleng,voxmage-demo-1.0}.json
+  timbre/lengleng@lengleng-atlas-v05-fcpe.json   上面的模型配的音色（锚点 ‖a‖=1.7286）
+  timbre/{AISHELL-SSB0005,0011,0016}@atlas-v05-fcpe.json
+  以及 @atlas-v10 / @atlas-v11 各若干
+
+另：给 5 个音色加上 `base_why`。
+它们的 `models` 扩成了 {atlas-v05-ofz, atlas-v05-ofz-joint, atlas-v05} 三个，
+而三者的 `base` 分别是 atlas-v05 与 atlas-v04 ⇒ 集合有两个值 ⇒ `base` 按规矩留空
+（`timbre_base_of`：「推不出来就留空 + 说明原因，绝不猜 —— base 写错的代价是下游
+拿错权重，比空值危险得多」）。
+
+但**空值本身看不出为什么空**，读者只会当成数据丢了，下次同步的人还可能当 bug 去"修"。
+所以把理由一并写进索引，紧挨着 `base` 放（两者要一起读才有意义）：
+
+    "base": "",
+    "base_why": "models 各成员的 base 不一致（['atlas-v04', 'atlas-v05']）⇒ 有歧义",
+
+这条字段由 `finetune/voxmodels.py::sync()` 计算并写回，不来自本机 cf.json，
+所以没有登记进 PRESERVED_FIELDS —— 它的值每轮重算，merge 保住反而会让
+「model 列表修好了、理由还留着旧的」。
+
+已发布条目的 download / release / sha256 / size 均已保住（`--check` 通过）。

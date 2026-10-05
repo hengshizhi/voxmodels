@@ -1,0 +1,19 @@
+{
+  "name": "atlas-v05-ofz-joint",
+  "kind": "base_model",
+  "weights": "atlas-v05-ofz-joint.safetensors",
+  "arch": "atlas-bypass-pitch-f0",
+  "trainer": "atlas_f0head_joint",
+  "base": "atlas-v05",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 600,
+  "created": "2026-09-30",
+  "aliases": [
+    "atlas_v05_ofz_joint"
+  ],
+  "note": "Atlas-v0.5-ofz-joint：**第③步联合微调** —— 声码器 `qharma` **冻结**当可微损失（波形域 mel L1 + f0 跟踪），只训 f0 头，600 步；起点 finetune\\exports\\atlas-v05-ofz\\atlas-v05-ofz.safetensors。损失 = `finetune/f0_loss.py::head_tracking_loss`。**不覆盖**已验证的 `atlas-v05-ofz`，便于同输入 A/B。",
+  "download": "",
+  "release": ""
+}

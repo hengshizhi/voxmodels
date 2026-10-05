@@ -5,10 +5,13 @@
   "timbre_loader": "xvector_npy",
   "timbre_adapter": null,
   "models": [
+    "atlas-v05-ofz",
+    "atlas-v05-ofz-joint",
     "atlas-v05"
   ],
-  "base": "atlas-v04",
-  "note": "在 atlas-v05 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 D:/datasets/gts_selfrecon/anchors；语料 finetune/lists/anchor_{name}.list，40 句/次）。atlas-v05 = 从 atlas-v04 接着训 + 全量微调（1 epoch，LR cosine 5e-6→1e-7）+ 新增歌唱语料（M4/OpenCpop 各 3x，清单 153,836 行）。锚点只对它自己那份权重最优，换权重需重跑。",
+  "base": "",
+  "base_why": "models 各成员的 base 不一致（['atlas-v04', 'atlas-v05']）⇒ 有歧义",
+  "note": "在 atlas-v05 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 H:/works/gts_selfrecon/anchors；语料 finetune/lists/anchor_{name}.list，40 句/次）。atlas-v05 = 从 atlas-v04 接着训 + 全量微调（1 epoch，LR cosine 5e-6→1e-7）+ 新增歌唱语料（M4/OpenCpop 各 3x，清单 153,836 行）。锚点只对它自己那份权重最优，换权重需重跑。 ★ atlas-v05-ofz / atlas-v05-ofz-joint 的主干（含旁路 / AdaLN / 音高编码器）与 atlas-v05 **逐位相同**（前者只多训了一个输出侧的 f0 头、后者联合微调也只调 f0 头）⇒ 锚点可直接复用，不需要重跑 anchor_opt（2026-09-30 确认）。",
   "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-ZH-Alto-1@atlas-v05/ZH-Alto-1@atlas-v05.zip",
   "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-ZH-Alto-1@atlas-v05",
   "sha256": "2a2926ae16089f9028bc0abf10704c4e1104d5b9edfd34124362696959994764",

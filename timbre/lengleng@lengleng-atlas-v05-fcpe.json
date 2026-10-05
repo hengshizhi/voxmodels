@@ -1,0 +1,15 @@
+{
+  "name": "lengleng@lengleng-atlas-v05-fcpe",
+  "kind": "timbre",
+  "vector": "lengleng@lengleng-atlas-v05-fcpe.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "lengleng-atlas-v05-fcpe"
+  ],
+  "base": "atlas-v05-fcpe",
+  "arch": "atlas-bypass-pitch",
+  "note": "Lengleng 音色，由 atlas_anchor_ft 训练器在 lengleng-atlas-v05-fcpe 权重上、与主干**一起**优化得到（4 epoch / 5244 步，起点锚点在同源权重上用 W 子集 2810 条凸包优化，gain +9.4%）。锚点位移 ‖Δ‖=1.5418（‖init‖=2.4121 → ‖final‖=1.7286，cosine 0.7709）—— 位移远大于 1e-3 的门槛，说明它确实被训练动了",
+  "download": "",
+  "release": ""
+}

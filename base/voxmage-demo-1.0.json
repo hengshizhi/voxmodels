@@ -1,0 +1,20 @@
+{
+  "name": "voxmage-demo-1.0",
+  "kind": "base_model",
+  "weights": "voxmage-demo-1.0.safetensors",
+  "aliases": [
+    "demo_ft_v1_ema",
+    "demo_ft_v1"
+  ],
+  "base": "官方预训练 120ms",
+  "arch": "",
+  "trainer": "ft_anneal",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 375,
+  "created": "2026-09-28",
+  "note": "demo_ft / v1 的试听导出（训练页自动生成）",
+  "download": "",
+  "release": ""
+}

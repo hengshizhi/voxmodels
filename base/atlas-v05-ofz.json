@@ -1,0 +1,19 @@
+{
+  "name": "atlas-v05-ofz",
+  "kind": "base_model",
+  "weights": "atlas-v05-ofz.safetensors",
+  "arch": "atlas-bypass-pitch-f0",
+  "trainer": "atlas_f0head",
+  "base": "atlas-v05",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 4000,
+  "created": "2026-09-30",
+  "aliases": [
+    "atlas_v05_ofz"
+  ],
+  "note": "Atlas-v0.5-ofz：在 atlas-v05 之上**只训 f0 输出头**（主干/旁路/AdaLN 全冻结，4000 步，数据 finetune\\lists\\sing_v05.list 歌声子集；损失 = f0_tools.F0Loss，标签 = extract_f0abs.py 的 YinPitch）。推理时 f0 进字段总线，声码器（如 qharma）在 accepts 里声明 f0 即可消费。",
+  "download": "",
+  "release": ""
+}

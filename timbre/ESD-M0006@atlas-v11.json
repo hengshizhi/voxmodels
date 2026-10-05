@@ -1,0 +1,14 @@
+{
+  "name": "ESD-M0006@atlas-v11",
+  "kind": "timbre",
+  "vector": "ESD-M0006@atlas-v11.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "atlas-v11"
+  ],
+  "base": "atlas-v10",
+  "note": "锚点在 atlas-v11 上优化（换权重需重跑 trainer:anchor_opt）；原目录 ESD-M0006",
+  "download": "",
+  "release": ""
+}

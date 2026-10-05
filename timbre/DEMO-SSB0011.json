@@ -1,0 +1,19 @@
+{
+  "name": "DEMO-SSB0011",
+  "kind": "timbre",
+  "vector": "DEMO-SSB0011.npy",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "models": [
+    "voxmage-demo-1.0"
+  ],
+  "base": "官方预训练 120ms",
+  "source": "用户新建",
+  "note": "",
+  "timbre_trainer": "anchor_opt",
+  "created": "2026-09-28 15:17",
+  "created_by": "GUI 新建音色",
+  "trained": "2026-09-28 15:18",
+  "download": "",
+  "release": ""
+}

@@ -1,0 +1,21 @@
+{
+  "name": "atlas-v05-fcpe",
+  "kind": "base_model",
+  "weights": "atlas-v05-fcpe.safetensors",
+  "aliases": [
+    "v05-fcpe_v1_ema",
+    "v05-fcpe_v1"
+  ],
+  "base": "atlas-v04",
+  "arch": "atlas-bypass-pitch",
+  "cond_front": "fcpe",
+  "trainer": "atlas_bypass",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 38459,
+  "created": "2026-10-06",
+  "note": "v05-fcpe：对齐实验 —— 权重与数据配比完全同 v05（153836 行 / 1 epoch / lr 5e-6 cosine->1e-7），只把 f0 口径换成 fcpe（现存 f0 全是 fcpe）。目的是让 v05 与 v11 的对比里 f0 口径被对齐掉",
+  "download": "",
+  "release": ""
+}

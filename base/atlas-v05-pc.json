@@ -1,0 +1,19 @@
+{
+  "name": "atlas-v05-pc",
+  "kind": "base_model",
+  "weights": "../atlas-v05/atlas-v05.safetensors",
+  "aliases": [
+    "atlas_v05_pc"
+  ],
+  "base": "atlas-v05",
+  "arch": "atlas-pitchclean",
+  "trainer": "atlas_bypass",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 38459,
+  "created": "2026-09-29",
+  "note": "atlas-v05 的**推理侧脏帧清洗对照臂**：weights 直接指向 atlas-v05 那份 safetensors（不复制文件，单一事实来源），架构换成 atlas-pitchclean ⇒ 只多一层音高脏帧清洗。跑分时与 atlas-v05 同run，配对检验即为『清洗的净效果』。",
+  "download": "",
+  "release": ""
+}

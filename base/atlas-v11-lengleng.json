@@ -1,0 +1,21 @@
+{
+  "name": "atlas-v11-lengleng",
+  "kind": "base_model",
+  "weights": "atlas-v11-lengleng.safetensors",
+  "aliases": [
+    "v11-lengleng_v1_ema",
+    "v11-lengleng_v1"
+  ],
+  "base": "atlas-v11",
+  "arch": "atlas-bypass-pitch",
+  "cond_front": "fcpe",
+  "trainer": "atlas_anchor_ft",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 5244,
+  "created": "2026-10-05",
+  "note": "v11-lengleng：Lengleng 音色联合微调（光量微调 + 锚点一起训），4 epoch / 5244 步；起点 atlas-v11",
+  "download": "",
+  "release": ""
+}

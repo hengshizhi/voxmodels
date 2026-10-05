@@ -8,7 +8,7 @@
     "atlas-v04"
   ],
   "base": "atlas-v03",
-  "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 D:/datasets/gts_selfrecon/anchors；语料 finetune/lists/anchor_ZH-Alto-1.list，40 句/次）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
+  "note": "在 atlas-v04 上重建的锚点（trainer:anchor_opt 凸包 + 300 步；warm start 自 H:/works/gts_selfrecon/anchors；语料 finetune/lists/anchor_ZH-Alto-1.list，40 句/次）。atlas-v04 = 从 atlas-v03 接着训 + 全量微调（4 epoch，LR cosine 1e-5→2e-7）。锚点只对它自己那份权重最优，换权重需重跑。",
   "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-ZH-Alto-1@atlas-v04/ZH-Alto-1@atlas-v04.zip",
   "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-ZH-Alto-1@atlas-v04",
   "sha256": "bb7e16a9c5f584c386ed65a8006e36b9ce90884f0d1d27b95f74f2115920a3f4",

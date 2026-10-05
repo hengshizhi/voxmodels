@@ -1,0 +1,19 @@
+{
+  "name": "atlas-v05-ofz2",
+  "kind": "base_model",
+  "weights": "atlas-v05-ofz2.safetensors",
+  "arch": "atlas-bypass-pitch-f0",
+  "trainer": "atlas_f0head",
+  "base": "atlas-v05",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 8000,
+  "created": "2026-09-30",
+  "aliases": [
+    "atlas_v05_ofz2"
+  ],
+  "note": "Atlas-v0.5-ofz：在 atlas-v05 之上**只训 f0 输出头**（主干/旁路/AdaLN 全冻结，8000 步，数据 finetune\\lists\\sing_v05.list）；损失 = `finetune/f0_loss.py::head_tracking_loss`（半音域 capped，发声门吃 YIN 的 conf/eng），标签 = `finetune/extract_f0abs.py`（**标签侧** YIN，帧心对齐，50~1100 Hz）—— 与输入侧前端 `smooth_f0.YinPitch` 是两份，口径不同，别混用。",
+  "download": "",
+  "release": ""
+}

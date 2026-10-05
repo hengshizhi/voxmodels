@@ -1,0 +1,20 @@
+{
+  "name": "atlas-v10",
+  "kind": "base_model",
+  "weights": "atlas-v10.safetensors",
+  "aliases": [
+    "atlas_v10_ema",
+    "atlas_v10"
+  ],
+  "base": "atlas-v05",
+  "arch": "atlas-bypass-pitch",
+  "trainer": "atlas_bypass",
+  "timbre_trainer": "anchor_opt",
+  "timbre_loader": "xvector_npy",
+  "timbre_adapter": null,
+  "step": 76918,
+  "created": "2026-10-02",
+  "note": "atlas-v10: cond pitch reworked (first-dip + parabolic, 60-1600 Hz), full fine-tune from atlas-v05, 2 epochs, lr 1e-5 cosine->2e-7. <work>/f0 re-extracted (102942 items). Not comparable with the old f0 spec.",
+  "download": "",
+  "release": ""
+}
