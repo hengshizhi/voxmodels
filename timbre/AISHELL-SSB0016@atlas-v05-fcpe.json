@@ -9,6 +9,6 @@
   ],
   "base": "atlas-v04",
   "note": "锚点在 atlas-v05-fcpe 上优化（换权重需重跑 trainer:anchor_opt）；原目录 AISHELL-SSB0016",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/timbre-AISHELL-SSB0016@atlas-v05-fcpe/AISHELL-SSB0016@atlas-v05-fcpe.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/timbre-AISHELL-SSB0016@atlas-v05-fcpe"
 }

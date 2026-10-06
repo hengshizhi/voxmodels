@@ -16,6 +16,6 @@
   "step": 38459,
   "created": "2026-10-06",
   "note": "v05-fcpe：对齐实验 —— 权重与数据配比完全同 v05（153836 行 / 1 epoch / lr 5e-6 cosine->1e-7），只把 f0 口径换成 fcpe（现存 f0 全是 fcpe）。目的是让 v05 与 v11 的对比里 f0 口径被对齐掉",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-atlas-v05-fcpe/atlas-v05-fcpe.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-atlas-v05-fcpe"
 }

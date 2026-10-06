@@ -16,6 +16,6 @@
   "step": 5244,
   "created": "2026-10-06",
   "note": "lengleng-atlas-v05-fcpe：Lengleng 音色联合微调（全量微调 + 同源锚点一起训），4 epoch / 5244 步；起点 atlas-v05-fcpe（v05 配比 + fcpe 口径 f0）。锚点起点在 atlas-v05-fcpe 权重上用 W 子集（2810 条）凸包优化得到（gain +9.4%），训练中与主干一起收敛",
-  "download": "",
-  "release": ""
+  "download": "https://github.com/hengshizhi/voxmodels/releases/download/base-lengleng-atlas-v05-fcpe/lengleng-atlas-v05-fcpe.zip",
+  "release": "https://github.com/hengshizhi/voxmodels/releases/tag/base-lengleng-atlas-v05-fcpe"
 }
